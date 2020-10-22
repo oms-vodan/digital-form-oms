@@ -1,17 +1,38 @@
 import React from 'react';
+import { useHistory } from "react-router-dom";
 import './styles.css';
 import { TextField, Button } from '@material-ui/core';
 
-function Login() {
-    return (
-      <div className="container">
-        <form noValidate autoComplete="off">
-          <TextField id="standard-basic" label="Login" />
-          <TextField id="standard-basic" label="Senha" type="password" />
-          <Button variant="contained" type="submit" color="primary">Entrar</Button>
-        </form>
-      </div>
-    );
+const styles = {
+  TextField: {
+    margin: 24,
+    marginTop: 0
+  },
+  Button: {
+    margin: 24,
+    marginBottom: 0
   }
+};
+
+function Login() {
+
+  const history = useHistory();
+
+  async function handleLogin(e) {
+    e.preventDefault();
+    localStorage.setItem('logged', 1);
+    history.push("/hospital");
+  }
+
+  return (
+    <div className="container">
+      <form noValidate autoComplete="off" onSubmit={handleLogin}>
+        <TextField style={styles.TextField} label="Login" />
+        <TextField style={styles.TextField} label="Senha" type="password" />
+        <Button style={styles.Button} variant="contained" type="submit" color="primary">Entrar</Button>
+      </form>
+    </div>
+  );
+}
   
-  export default Login;
+export default Login;

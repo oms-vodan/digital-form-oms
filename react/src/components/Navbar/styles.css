@@ -1,0 +1,25 @@
+nav {
+    position: absolute;
+    display: flex;
+    height: 60px;
+    width: 100%;
+    background-color: #538EB3;
+}
+
+nav .navContent {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 5vw;
+}
+
+nav .navContent .rightItems {
+    display: flex;
+    align-items: center;
+}
+
+.navContent .rightItems p {
+    margin-right: 30px;
+}
