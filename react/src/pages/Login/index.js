@@ -20,7 +20,6 @@ function Login() {
 
   async function handleLogin(e) {
     e.preventDefault();
-    localStorage.setItem('logged', 1);
     history.push("/hospital");
   }
 

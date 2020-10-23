@@ -7,18 +7,12 @@ import Navbar from './components/Navbar'
 function App() {
 
   function IsLogged(props) {
-    const isLoggedIn = props.isLoggedIn;
-    console.log(isLoggedIn);
-    if(isLoggedIn) {
-      return <Navbar />;
-    } else {
-      return '';
-    }
+    return <Navbar />;
   }
 
   return (
     <div id='full'>
-      <IsLogged isLoggedIn={true}/>
+      <IsLogged isLoggedIn={null}/>
       <Routes />
     </div>
   );
