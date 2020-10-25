@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom";
 import './styles.css';
 import { TextField, Button } from '@material-ui/core';
 
+import { connect } from 'react-redux';
+
 const styles = {
   TextField: {
     margin: 24,
@@ -14,12 +16,20 @@ const styles = {
   }
 };
 
-function Login() {
+function userLogin() {
+  return {
+    type: 'TOGGLE_LOGIN',
+    isLogged: true,
+  }
+}
+
+function Login({ logged, dispatch }) {
 
   const history = useHistory();
 
   async function handleLogin(e) {
     e.preventDefault();
+    dispatch(userLogin());
     history.push("/hospital");
   }
 
@@ -34,4 +44,4 @@ function Login() {
   );
 }
   
-export default Login;
+export default connect(state => ({ logged: state }))(Login);

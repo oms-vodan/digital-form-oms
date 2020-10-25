@@ -1,21 +1,29 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import './App.css';
 import Routes from './routes';
 
 import Navbar from './components/Navbar'
 
-function App() {
+
+
+function App({logged}) {
 
   function IsLogged(props) {
-    return <Navbar />;
+    console.log(props);
+    if(props.isLoggedIn)
+      return <Navbar />;
+    else
+      return '';
   }
 
   return (
     <div id='full'>
-      <IsLogged isLoggedIn={null}/>
-      <Routes />
+        <IsLogged isLoggedIn={logged}/>
+        <Routes />
     </div>
   );
 }
 
-export default App;
+export default connect(state => ({ logged: state.logged }))(App);

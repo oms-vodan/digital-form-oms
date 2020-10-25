@@ -1,7 +1,10 @@
 import React from 'react';
 import './styles.css';
 
+import { connect } from 'react-redux';
+
 import { Button } from '@material-ui/core';
+
 
 const styles = {
     Button: {
@@ -9,7 +12,19 @@ const styles = {
     }
 };
 
-function Navbar({ onSubmit }) {
+function userLogout() {
+    return {
+      type: 'TOGGLE_LOGOUT',
+      isLogged: false,
+    }
+  }
+
+function Navbar({ onSubmit, logged, dispatch }) {
+
+
+    function logout() {
+        dispatch(userLogout());
+    }
 
     return (
         <nav>
@@ -17,7 +32,7 @@ function Navbar({ onSubmit }) {
                 <h1>Formulário OMS</h1>
                 <div className="rightItems">
                     <p>Acesso como <b>Fulano da Silva</b></p>
-                    <Button style={styles.Button}>SAIR</Button>
+                    <Button style={styles.Button} onClick={logout}>SAIR</Button>
                 </div>
                 
             </div>
@@ -25,4 +40,4 @@ function Navbar({ onSubmit }) {
     );
 }
 
-export default Navbar;
+export default connect(state => ({ logged: state.logged }))(Navbar);
