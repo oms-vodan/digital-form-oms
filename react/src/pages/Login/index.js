@@ -30,11 +30,11 @@ function Login({ logged, dispatch }) {
   async function handleLogin(e) {
     e.preventDefault();
     dispatch(userLogin());
-    history.push("/hospital");
+    history.push("/prontuario");
   }
 
   return (
-    <div className="container">
+    <div className="container login">
       <form noValidate autoComplete="off" onSubmit={handleLogin}>
         <TextField style={styles.TextField} label="Login" />
         <TextField style={styles.TextField} label="Senha" type="password" />

@@ -1,11 +1,11 @@
 import React from 'react';
 import './styles.css';
 
-function Prontuario({ logged, dispatch }) {
+function Prontuario() {
 
     return (
-        <div className="container">
-
+        <div className="container prontuarios">
+            Buscar prontuário
         </div>
     );
 }
