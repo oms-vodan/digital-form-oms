@@ -3,3 +3,11 @@
   max-width: 90vw;
   width: 640px;
 }
+
+main.container {
+  margin-top: 90px;
+  margin-bottom: 90px;
+  background-color: white;
+  padding: 24px;
+  border-radius: 10px;
+} 
