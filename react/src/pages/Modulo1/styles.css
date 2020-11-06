@@ -22,3 +22,9 @@ form.mod1 h3 {
     margin-top: 80px;
     margin-bottom: 40px;
 }
+
+@media (max-width: 640px) {
+    form.mod1 div.form-grid {
+        grid-template-columns: 1fr;
+    }
+}
