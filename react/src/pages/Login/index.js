@@ -31,7 +31,7 @@ function Login({ logged, dispatch }) {
     e.preventDefault();
     dispatch(userLogin());
     localStorage.setItem('authToken', 'token');
-    history.push("/prontuario");
+    history.replace("/prontuario");
   }
 
   return (

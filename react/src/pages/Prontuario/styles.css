@@ -15,13 +15,15 @@
     width: 250px;
 }
 
-div.prontuario-continue {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 36px;
+div.prontuario-result {
+    padding-bottom: 32px;
 }
 
-div.prontuario-continue button {
-    width: 200px;
+div.prontuario-result ul {
+    border-bottom: 0.5px solid #c4c4c4;
+}
+
+div.prontuario-result ul:hover{
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.1);
 }

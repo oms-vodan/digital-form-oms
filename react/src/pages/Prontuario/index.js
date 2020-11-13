@@ -1,8 +1,9 @@
 import React from 'react';
 import './styles.css';
 import { useHistory } from "react-router-dom";
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, List, ListItem, ListItemText, ListItemIcon,  } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 
 function Prontuario() {
 
@@ -12,14 +13,15 @@ function Prontuario() {
         e.preventDefault();
     }
 
-    function toForm() {
+    function toForm(prontuario) {
+        console.log('prontuário escolhido: ', prontuario);
         history.push('/modulo1');
     }
 
     return (
         <main className="container prontuarios">
-            <h2>Prontuário</h2> 
-            <div className="prontuario-options"> 
+            <h2>Prontuário</h2>
+            <div className="prontuario-options">
                 <form noValidate autoComplete="off" onSubmit={handleSearch}>
                     <TextField id="standard-basic" label="Nº Prontuário" />
                     <Button variant="contained" color="primary" type="submit">
@@ -31,8 +33,17 @@ function Prontuario() {
                     Novo Prontuário
                 </Button>
             </div>
-            <div className="prontuario-continue">
-                <Button variant="contained" color="primary" onClick={toForm}>Continuar</Button>
+            <div className="prontuario-result">
+                <List>
+                    <ListItem onClick={() => toForm('189123492')}>
+                        <ListItemIcon>
+                            <AssignmentIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                            primary="189123492"
+                        />
+                    </ListItem>
+                </List>
             </div>
         </main>
     );
