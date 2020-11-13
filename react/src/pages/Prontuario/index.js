@@ -15,7 +15,7 @@ function Prontuario() {
 
     function toForm(prontuario) {
         console.log('prontuário escolhido: ', prontuario);
-        history.push('/modulo1');
+        history.push('/modulos');
     }
 
     return (
