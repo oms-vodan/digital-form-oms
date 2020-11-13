@@ -46,7 +46,7 @@ function ModuloUm() {
                 </header>
                 <h2>Módulo 1 - Admissão</h2>
             </div>
-            <form className="mod1" onSubmit={submit}>
+            <form className="module" onSubmit={submit}>
 
                 <div className="form-grid">
                     <TextField
@@ -450,14 +450,14 @@ function ModuloUm() {
                     <div>
                         <FormLabel component="legend">Qual antiviral</FormLabel>
                         <RadioGroup aria-label="antiviral" name="254" onChange={handleChange}>
-                            <FormControlLabel value="sim" control={<Radio />} label="Interferon alfa" />
-                            <FormControlLabel value="não" control={<Radio />} label="Interferon beta" />
-                            <FormControlLabel value="desconhecido" control={<Radio />} label="Lopinavir/Ritonavir" />
-                            <FormControlLabel value="desconhecido" control={<Radio />} label="Inibidor de neuraminidase" />
-                            <FormControlLabel value="desconhecido" control={<Radio />} label="Ribavirina" />
-                            <FormControlLabel value="desconhecido" control={<Radio />} label="Azitromicina" />
-                            <FormControlLabel value="desconhecido" control={<Radio />} label="Cloroquina / hidroxicloroquina" />
-                            <FormControlLabel value="desconhecido" control={<Radio />} label="Favipiravir" />
+                            <FormControlLabel value="Interferon alfa" control={<Radio />} label="Interferon alfa" />
+                            <FormControlLabel value="Interferon beta" control={<Radio />} label="Interferon beta" />
+                            <FormControlLabel value="Lopinavir/Ritonavir" control={<Radio />} label="Lopinavir/Ritonavir" />
+                            <FormControlLabel value="Inibidor de neuraminidase" control={<Radio />} label="Inibidor de neuraminidase" />
+                            <FormControlLabel value="Ribavirina" control={<Radio />} label="Ribavirina" />
+                            <FormControlLabel value="Azitromicina" control={<Radio />} label="Azitromicina" />
+                            <FormControlLabel value="Cloroquina / hidroxicloroquina" control={<Radio />} label="Cloroquina / hidroxicloroquina" />
+                            <FormControlLabel value="Favipiravir" control={<Radio />} label="Favipiravir" />
                         </RadioGroup>
                     </div>
 
@@ -891,7 +891,131 @@ function ModuloUm() {
 
                 <div className="form-grid">
 
-                    {/* TO DO */}
+                    <div>
+                        <FormLabel component="legend">UTI ou UCE</FormLabel>
+                        <RadioGroup aria-label="UTI ou UCE" name="150" onChange={handleChange}>
+                            <FormControlLabel value="sim" control={<Radio />} label="Sim" />
+                            <FormControlLabel value="não" control={<Radio />} label="Não" />
+                            <FormControlLabel value="desconhecido" control={<Radio />} label="Desconhecido" />
+                        </RadioGroup>
+                    </div>
+
+                    <div>
+                        <FormLabel component="legend">Oxigenoterapia</FormLabel>
+                        <RadioGroup aria-label="Oxigenoterapia" name="39" onChange={handleChange}>
+                            <FormControlLabel value="sim" control={<Radio />} label="Sim" />
+                            <FormControlLabel value="não" control={<Radio />} label="Não" />
+                            <FormControlLabel value="desconhecido" control={<Radio />} label="Desconhecido" />
+                        </RadioGroup>
+                    </div>
+
+                    {/* Depende da questão Oxigenoterapia */}
+                    <div>
+                        <FormLabel component="legend">Vazão de O2</FormLabel>
+                        <RadioGroup aria-label="Vazão de O2" name="89" onChange={handleChange}>
+                            <FormControlLabel value="> 15 L/min" control={<Radio />} label="> 15 L/min" />
+                            <FormControlLabel value="1-5 L/min" control={<Radio />} label="1-5 L/min" />
+                            <FormControlLabel value="11-15 L/min" control={<Radio />} label="11-15 L/min" />
+                            <FormControlLabel value="6-10 L/min" control={<Radio />} label="6-10 L/min" />
+                            <FormControlLabel value="Desconhecido" control={<Radio />} label="Desconhecido" />
+
+                        </RadioGroup>
+                    </div>
+
+                    {/* Depende da questão Oxigenoterapia */}
+                    <div>
+                        <FormLabel component="legend">Fonte de Oxigênio</FormLabel>
+                        <RadioGroup aria-label="Fonte de Oxigênio" name="92" onChange={handleChange}>
+                            <FormControlLabel value="Concentrador" control={<Radio />} label="Concentrador" />
+                            <FormControlLabel value="Cilindro" control={<Radio />} label="Cilindro" />
+                            <FormControlLabel value="Canalizado" control={<Radio />} label="Canalizado" />
+                            <FormControlLabel value="Desconhecido" control={<Radio />} label="Desconhecido" />
+
+                        </RadioGroup>
+                    </div>
+
+                    {/* Depende da questão Oxigenoterapia */}
+                    <div>
+                        <FormLabel component="legend">Interface de oxigenoterapia</FormLabel>
+                        <RadioGroup aria-label="Interface de oxigenoterapia" name="90" onChange={handleChange}>
+                            <FormControlLabel value="Máscara CPAP/VNI" control={<Radio />} label="Máscara CPAP/VNI" />
+                            <FormControlLabel value="Cânula nasal de alto fluxo" control={<Radio />} label="Cânula nasal de alto fluxo" />
+                            <FormControlLabel value="Máscara" control={<Radio />} label="Máscara" />
+                            <FormControlLabel value="Máscara com reservatório" control={<Radio />} label="Máscara com reservatório" />
+                            <FormControlLabel value="Desconhecido" control={<Radio />} label="Desconhecido" />
+
+                        </RadioGroup>
+                    </div>
+
+                    <div>
+                        <FormLabel component="legend">Ventilação não-invasiva</FormLabel>
+                        <RadioGroup aria-label="Ventilação não-invasiva" name="153" onChange={handleChange}>
+                            <FormControlLabel value="sim" control={<Radio />} label="Sim" />
+                            <FormControlLabel value="não" control={<Radio />} label="Não" />
+                            <FormControlLabel value="desconhecido" control={<Radio />} label="Desconhecido" />
+                            <FormControlLabel value="não informado" control={<Radio />} label="Não Informado" />
+                        </RadioGroup>
+                    </div>
+
+                    <div>
+                        <FormLabel component="legend">Posição prona</FormLabel>
+                        <RadioGroup aria-label="Posição prona" name="154" onChange={handleChange}>
+                            <FormControlLabel value="sim" control={<Radio />} label="Sim" />
+                            <FormControlLabel value="não" control={<Radio />} label="Não" />
+                            <FormControlLabel value="desconhecido" control={<Radio />} label="Desconhecido" />
+                        </RadioGroup>
+                    </div>
+
+                    <div></div>
+
+                    <div>
+                        <FormLabel component="legend">Ventilação invasiva</FormLabel>
+                        <RadioGroup aria-label="Ventilação invasiva" name="152" onChange={handleChange}>
+                            <FormControlLabel value="sim" control={<Radio />} label="Sim" />
+                            <FormControlLabel value="não" control={<Radio />} label="Não" />
+                            <FormControlLabel value="desconhecido" control={<Radio />} label="Desconhecido" />
+                        </RadioGroup>
+                    </div>
+
+                    {/* Depende da questão Ventilação invasiva */}
+                    <div>
+                        <TextField name="249" label="Pressão expiratória final positiva" />
+
+                        <TextField name="245" label="Fração de oxigênio inspirado" />
+
+                        <TextField name="248" label="Pressão do plato" />
+
+                        <TextField name="247" label="Pressão parcial do CO2" />
+
+                        <TextField name="246" label="Pressão parcial do O2" />
+                    </div>
+
+                    <div>
+                        <FormLabel component="legend">Inotrópicos/vasopressores</FormLabel>
+                        <RadioGroup aria-label="Inotrópicos/vasopressores" name="151" onChange={handleChange}>
+                            <FormControlLabel value="sim" control={<Radio />} label="Sim" />
+                            <FormControlLabel value="não" control={<Radio />} label="Não" />
+                            <FormControlLabel value="desconhecido" control={<Radio />} label="Desconhecido" />
+                        </RadioGroup>
+                    </div>
+
+                    <div>
+                        <FormLabel component="legend">Suporte extracorpóreo (ECMO)</FormLabel>
+                        <RadioGroup aria-label="Suporte extracorpóreo (ECMO)" name="149" onChange={handleChange}>
+                            <FormControlLabel value="sim" control={<Radio />} label="Sim" />
+                            <FormControlLabel value="não" control={<Radio />} label="Não" />
+                            <FormControlLabel value="desconhecido" control={<Radio />} label="Desconhecido" />
+                        </RadioGroup>
+                    </div>
+
+                    <div>
+                        <FormLabel component="legend">Terapia de substituição renal ou diálise</FormLabel>
+                        <RadioGroup aria-label="Terapia de substituição renal ou diálise" name="155" onChange={handleChange}>
+                            <FormControlLabel value="sim" control={<Radio />} label="Sim" />
+                            <FormControlLabel value="não" control={<Radio />} label="Não" />
+                            <FormControlLabel value="desconhecido" control={<Radio />} label="Desconhecido" />
+                        </RadioGroup>
+                    </div>
 
                 </div>
 
@@ -899,57 +1023,57 @@ function ModuloUm() {
 
                 <div className="form-grid">
 
-                    <TextField name="158" label="Hemoglobina" />
+                    <TextField name="158" label="Hemoglobina" onChange={handleChange} />
 
-                    <TextField name="226" label="Leucócitos" />
+                    <TextField name="226" label="Leucócitos" onChange={handleChange} />
 
-                    <TextField name="157" label="Hematócrito" />
+                    <TextField name="157" label="Hematócrito" onChange={handleChange} />
 
-                    <TextField name="163" label="Plaquetas" />
+                    <TextField name="163" label="Plaquetas" onChange={handleChange} />
 
-                    <TextField name="115" label="TTPA/APTR" />
+                    <TextField name="115" label="TTPA/APTR" onChange={handleChange} />
 
-                    <TextField name="169" label="TP" />
+                    <TextField name="169" label="TP" onChange={handleChange} />
 
-                    <TextField name="160" label="INR" />
+                    <TextField name="160" label="INR" onChange={handleChange} />
 
-                    <TextField name="114" label="ALT/TGP" />
+                    <TextField name="114" label="ALT/TGP" onChange={handleChange} />
 
-                    <TextField name="171" label="Bilirrubina total" />
+                    <TextField name="171" label="Bilirrubina total" onChange={handleChange} />
 
-                    <TextField name="116" label="AST/TGO" />
+                    <TextField name="116" label="AST/TGO" onChange={handleChange} />
 
-                    <TextField name="174" label="Uréia (BUN)" />
+                    <TextField name="174" label="Uréia (BUN)" onChange={handleChange} />
 
-                    <TextField name="161" label="Lactose" />
+                    <TextField name="161" label="Lactose" onChange={handleChange} />
 
-                    <TextField name="146" label="Creatinina" />
+                    <TextField name="146" label="Creatinina" onChange={handleChange} />
 
-                    <TextField name="170" label="Sódio" />
+                    <TextField name="170" label="Sódio" onChange={handleChange} />
 
-                    <TextField name="164" label="Potássio" />
+                    <TextField name="164" label="Potássio" onChange={handleChange} />
 
-                    <TextField name="165" label="Procalcitonina" />
+                    <TextField name="165" label="Procalcitonina" onChange={handleChange} />
 
-                    <TextField name="147" label="PCR" />
+                    <TextField name="147" label="PCR" onChange={handleChange} />
 
-                    <TextField name="162" label="LDH" />
+                    <TextField name="162" label="LDH" onChange={handleChange} />
 
-                    <TextField name="145" label="Creatina quinase" />
+                    <TextField name="145" label="Creatina quinase" onChange={handleChange} />
 
-                    <TextField name="172" label="Troponina" />
+                    <TextField name="172" label="Troponina" onChange={handleChange} />
 
-                    <TextField name="118" label="VHS" />
+                    <TextField name="118" label="VHS" onChange={handleChange} />
 
-                    <TextField name="148" label="Dimero D" />
+                    <TextField name="148" label="Dimero D" onChange={handleChange} />
 
-                    <TextField name="156" label="Ferritina" />
+                    <TextField name="156" label="Ferritina" onChange={handleChange} />
 
-                    <TextField name="159" label="IL-6" />
+                    <TextField name="159" label="IL-6" onChange={handleChange} />
 
                 </div>
 
-                <div>
+                <div className="form-submit">
                     <Button variant="contained" type="submit" color="primary">Enviar</Button>
                 </div>
             </form>

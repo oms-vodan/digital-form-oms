@@ -1,5 +1,6 @@
 import React from 'react';
 import './styles.css';
+import { useHistory  } from "react-router-dom";
 
 import { connect } from 'react-redux';
 
@@ -21,9 +22,12 @@ function userLogout() {
 
 function Navbar({ onSubmit, logged, dispatch }) {
 
+    const history = useHistory();
 
     function logout() {
+        localStorage.removeItem('authToken');
         dispatch(userLogout());
+        window.location.href = 'http://localhost:3000';
     }
 
     return (

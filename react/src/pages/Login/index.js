@@ -30,6 +30,7 @@ function Login({ logged, dispatch }) {
   async function handleLogin(e) {
     e.preventDefault();
     dispatch(userLogin());
+    localStorage.setItem('authToken', 'token');
     history.push("/prontuario");
   }
 

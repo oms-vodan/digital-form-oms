@@ -14,3 +14,14 @@
 .prontuario-options button.add-prontuario {
     width: 250px;
 }
+
+div.prontuario-continue {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 36px;
+}
+
+div.prontuario-continue button {
+    width: 200px;
+}

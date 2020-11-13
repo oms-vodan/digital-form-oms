@@ -1,7 +1,14 @@
 import { createStore } from 'redux';
 
+function checkStorage() {
+    if(localStorage.getItem('authToken'))
+        return true;
+    else
+        return false;
+}
+
 const INITIAL_STATE = {
-    logged: true,
+    logged: checkStorage(),
     username: '',
 }
 
