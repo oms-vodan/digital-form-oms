@@ -26,6 +26,14 @@ form.module {
   width: 100%;  
 }
 
+form.module .qst {
+  padding: 20px 0;
+}
+
+form.module .qst .MuiTextField-root {
+  width: 60%;
+}
+
 form.module div.form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -35,7 +43,7 @@ form.module div.form-grid {
 }
 
 form.module h3 {
-  margin-top: 80px;
+  margin-top: 50px;
   margin-bottom: 40px;
 }
 
