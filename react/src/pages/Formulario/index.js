@@ -1,23 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect  } from 'react';
 import './styles.css';
+import { useLocation } from "react-router-dom";
 import { TextField, Button, FormLabel, RadioGroup, Radio, FormControlLabel } from '@material-ui/core';
 import api from '../../services/api';
 
-function ModuloDois() {
+function Formulario() {
+
+    const location = useLocation();
+
+    const titles = ['Admissão','Acompanhamento','Desfecho']
 
     const [form, setForm] = useState({
-        168: getCurrentDate(),
+
     });
 
     const [questions, setQuestions] = useState([]);
 
     useEffect(() => {
         async function loadForm() {
-          const response = await api.get('/form/2');
+          const response = await api.get('/form/' + location.state.modulo);
           console.log(response.data);
           setQuestions(response.data);
         }
-    
         loadForm();
     }, [])
 
@@ -44,6 +48,22 @@ function ModuloDois() {
         });
     }
 
+    function checkTitle(index, question) {
+        if(index-1 < 0) {
+            return true;
+        }
+        if(typeof(questions[index - 1].dsc_qst_grp) == 'string') {
+            if(question.dsc_qst_grp !== questions[index - 1].dsc_qst_grp) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
+
+
     function submit(e) {
         e.preventDefault();
         console.log(form);
@@ -53,35 +73,34 @@ function ModuloDois() {
         <main className="container">
             <div>
                 <header className="index">
-                    HUGG > 189123492 > <b>Acompanhamento</b>
+                    HUGG > 189123492 > <b>{ titles[location.state.modulo-1] }</b>
                 </header>
-                <h2>Módulo 2 - Acompanhamento</h2>
+                <h2>Módulo { location.state.modulo } - { titles[location.state.modulo-1] }</h2>
                 <form className="module" onSubmit={submit}>
                     <div>
+                    { questions.length === 0 &&
+                        <div className="loading">
+                            <img src="assets/loading.svg" alt="Carregando"/>
+                        </div>
+                    }
                     {questions.map((question, index) => (
                         <div className="qst" key={question.qstId}>
 
-                            { (question.sub_qst !== '') && 
-                                <p>Essa qst depende da anterior - 
-                                    {questions[index - 1].qstId} - 
-                                    valor da anterior: {form[questions[index - 1].qstId]}
-                                </p>
-                            }
-
                             {/* Se for um novo grupo de questões*/}
-                            { (question.dsc_qst_grp !== "" && question.dsc_qst_grp !== questions[index - 1].dsc_qst_grp) &&
+                            { (question.dsc_qst_grp !== "" && checkTitle(index, question)) &&
                             <h3>{question.dsc_qst_grp}</h3>
                             }
 
                             {/* Se for do tipo Date question*/}
                             { (question.qst_type === "Date question") && 
+                                ( (question.sub_qst !== '' && (form[question['idsub_qst']] === 'Sim' || Number(form[question['idsub_qst']] + 1) > 0)) || question.sub_qst === '') &&
                             <div>
                                 <TextField
                                     id="date"
                                     label={question.dsc_qst}
                                     type="date"
                                     name={String(question.qstId)}
-                                    defaultValue={getCurrentDate()}
+                                    // defaultValue={getCurrentDate()}
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -92,12 +111,15 @@ function ModuloDois() {
 
                             {/* Se for do tipo Number question*/}
                             { (question.qst_type === "Number question") && 
+                                ( (question.sub_qst !== '' && (form[question['idsub_qst']] === 'Sim' || Number(form[question['idsub_qst']] + 1) > 0)) || question.sub_qst === '') &&
                             <TextField type="number" name={String(question.qstId)} label={question.dsc_qst} onChange={handleChange}/>
                             }
 
                             {/* Se for do tipo List question ou YNU_Question ou YNUN_Question*/}
                             { (question.qst_type === "List question" || question.qst_type === "YNU_Question" || question.qst_type === "YNUN_Question") && 
-                            <div>
+                                ( (question.sub_qst !== '' && (form[question['idsub_qst']] === 'Sim' || Number(form[question['idsub_qst']] + 1) > 0)) || question.sub_qst === '') &&
+                            <div className="MuiTextField-root">
+                                { Number(form[question['idsub_qst']] + 1) > 0 }
                                 <FormLabel component="legend">{question.dsc_qst}</FormLabel>
                                 <RadioGroup aria-label={question.dsc_qst} name={String(question.qstId)} onChange={handleChange}>
                                     {question.rsp_pad.split(' | ').map((item) => (
@@ -109,6 +131,7 @@ function ModuloDois() {
 
                             {/* Se for do tipo Text_Question ou Laboratory question ou Ventilation question*/}
                             { (question.qst_type === "Text_Question" || question.qst_type === "Laboratory question" || question.qst_type === "Ventilation question") && 
+                                ( (question.sub_qst !== '' && (form[question['idsub_qst']] === 'Sim' || Number(form[question['idsub_qst']] + 1) > 0)) || question.sub_qst === '') &&
                             <TextField name={String(question.qstId)} label={question.dsc_qst} onChange={handleChange}/>
                             }
 
@@ -125,4 +148,4 @@ function ModuloDois() {
     );
 }
 
-export default ModuloDois;
+export default Formulario;

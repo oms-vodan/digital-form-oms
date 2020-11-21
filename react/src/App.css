@@ -26,12 +26,27 @@ form.module {
   width: 100%;  
 }
 
+form.module .loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+form.module .loading img {
+  height: 100px;
+}
+
 form.module .qst {
-  padding: 20px 0;
+  /* padding: 20px 0; */
 }
 
 form.module .qst .MuiTextField-root {
+  padding: 20px 0;
   width: 60%;
+}
+
+form.module .qst .MuiInput-formControl {
+  margin-top: 0;
 }
 
 form.module div.form-grid {
@@ -43,8 +58,8 @@ form.module div.form-grid {
 }
 
 form.module h3 {
-  margin-top: 50px;
-  margin-bottom: 40px;
+  margin-top: 80px;
+  margin-bottom: 25px;
 }
 
 form.module div.form-submit {

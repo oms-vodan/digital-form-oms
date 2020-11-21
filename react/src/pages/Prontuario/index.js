@@ -28,7 +28,9 @@ function Prontuario() {
                         Buscar
                     </Button>
                 </form>
-                <Button variant="outlined" color="primary" className="add-prontuario">
+                <Button variant="outlined" color="primary" className="add-prontuario" onClick={ () => {
+                    history.push('/formulario', { modulo: 1 })
+                }}>
                     <Add color="primary" />
                     Novo Prontuário
                 </Button>
