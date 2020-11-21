@@ -119,7 +119,6 @@ function Formulario() {
                             { (question.qst_type === "List question" || question.qst_type === "YNU_Question" || question.qst_type === "YNUN_Question") && 
                                 ( (question.sub_qst !== '' && (form[question['idsub_qst']] === 'Sim' || Number(form[question['idsub_qst']] + 1) > 0)) || question.sub_qst === '') &&
                             <div className="MuiTextField-root">
-                                { Number(form[question['idsub_qst']] + 1) > 0 }
                                 <FormLabel component="legend">{question.dsc_qst}</FormLabel>
                                 <RadioGroup aria-label={question.dsc_qst} name={String(question.qstId)} onChange={handleChange}>
                                     {question.rsp_pad.split(' | ').map((item) => (
@@ -134,6 +133,18 @@ function Formulario() {
                                 ( (question.sub_qst !== '' && (form[question['idsub_qst']] === 'Sim' || Number(form[question['idsub_qst']] + 1) > 0)) || question.sub_qst === '') &&
                             <TextField name={String(question.qstId)} label={question.dsc_qst} onChange={handleChange}/>
                             }
+
+                            {/* Se for do tipo Boolean_Question*/}
+                            { (question.qst_type === "Boolean_Question") && 
+                                ( (question.sub_qst !== '' && (form[question['idsub_qst']] === 'Sim' || Number(form[question['idsub_qst']] + 1) > 0)) || question.sub_qst === '') &&
+                            <div className="MuiTextField-root">
+                                <FormLabel component="legend">{question.dsc_qst}</FormLabel>
+                                <RadioGroup aria-label={question.dsc_qst} name={String(question.qstId)} onChange={handleChange}>
+                                    <FormControlLabel value='true' control={<Radio />} label='Sim' />
+                                    <FormControlLabel value='false' control={<Radio />} label='Não' />
+                                </RadioGroup>
+                            </div>
+                            } 
 
                         </div>
                     ))}
