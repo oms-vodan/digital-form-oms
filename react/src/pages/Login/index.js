@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import './styles.css';
 import { TextField, Button } from '@material-ui/core';
@@ -25,21 +25,39 @@ function userLogin() {
 
 function Login({ logged, dispatch }) {
 
+  const [form, setForm] = useState({
+    email: '',
+    senha: '',
+    error: false
+  });
+
   const history = useHistory();
 
   async function handleLogin(e) {
     e.preventDefault();
-    dispatch(userLogin());
-    localStorage.setItem('authToken', 'token');
-    history.replace("/prontuario");
+    console.log(form);
+    //dispatch(userLogin());
+    //localStorage.setItem('authToken', 'token');
+    //history.replace("/prontuario");
+  }
+  
+  function handleChange(e) {
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
+
+    setForm({
+        ...form,
+        [name]: value,
+    });
   }
 
   return (
     <div className="container login">
       <form noValidate autoComplete="off" onSubmit={handleLogin}>
-        <TextField style={styles.TextField} label="Login" />
-        <TextField style={styles.TextField} label="Senha" type="password" />
-        <Button style={styles.Button} variant="contained" type="submit" color="primary">Entrar</Button>
+        <TextField style={styles.TextField} name="email" label="Email" type="email" onChange={handleChange} />
+        <TextField style={styles.TextField} name="senha" label="Senha" type="password" onChange={handleChange} />
+        <Button style={styles.Button} variant="contained" type="submit" color="primary" disabled={form.email === '' || form.senha === ''}>Entrar</Button>
       </form>
     </div>
   );

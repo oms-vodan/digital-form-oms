@@ -45,6 +45,10 @@ form.module .qst .MuiTextField-root {
   width: 60%;
 }
 
+form.module .qst .MuiInputBase-root {
+  width: 100%;
+}
+
 form.module .qst .MuiInput-formControl {
   margin-top: 0;
 }
