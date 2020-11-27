@@ -36,9 +36,9 @@ function Login({ logged, dispatch }) {
   async function handleLogin(e) {
     e.preventDefault();
     console.log(form);
-    //dispatch(userLogin());
-    //localStorage.setItem('authToken', 'token');
-    //history.replace("/prontuario");
+    dispatch(userLogin());
+    localStorage.setItem('authToken', 'token');
+    history.replace("/prontuario");
   }
   
   function handleChange(e) {
