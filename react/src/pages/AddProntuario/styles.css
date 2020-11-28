@@ -1,0 +1,30 @@
+main.add-prontuario form {
+    padding: 36px 0;
+    width: 100%;
+}
+
+main.add-prontuario form div.MuiTextField-root {
+    width: 50%;
+}
+
+main.add-prontuario form .submit-pront {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+
+/* Removendo setas do input de número */
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

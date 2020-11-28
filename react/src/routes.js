@@ -7,6 +7,7 @@ import Hospital from "./pages/Hospital";
 import Prontuario from "./pages/Prontuario";
 import Modulos from "./pages/Modulos";
 import Formulario from "./pages/Formulario";
+import AddProntuario from "./pages/AddProntuario";
 
 export default function Routes() {
     return (
@@ -17,6 +18,7 @@ export default function Routes() {
           <Route path="/cadastro" component={Cadastro} exact />
           <Route path="/hospital" component={Hospital} exact />
           <Route path="/prontuario" component={Prontuario} exact />
+          <Route path="/add-prontuario" component={AddProntuario} exact />
           <Route path="/modulos" component={Modulos} exact />
           <Route path="/Formulario" component={Formulario} exact />
         </Switch>

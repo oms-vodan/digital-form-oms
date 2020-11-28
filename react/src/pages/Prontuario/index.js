@@ -20,7 +20,12 @@ function Prontuario() {
 
     return (
         <main className="container prontuarios">
-            <h2>Prontuário</h2>
+            <div>
+                <header className="index">
+                    <b>HUGG</b>
+                </header>
+                <h2>Prontuário</h2>
+            </div>
             <div className="prontuario-options">
                 <form noValidate autoComplete="off" onSubmit={handleSearch}>
                     <TextField id="standard-basic" label="Nº Prontuário" />
