@@ -20,14 +20,17 @@ function userLogout() {
     }
   }
 
-function Navbar({ onSubmit, logged, dispatch }) {
+function Navbar({ onSubmit, state, dispatch }) {
 
     const history = useHistory();
+    
+    console.log(state);
 
     function logout() {
         localStorage.removeItem('authToken');
+        localStorage.removeItem('username');
         dispatch(userLogout());
-        window.location.href = 'http://localhost:3000';
+        window.location.href = '/';
     }
 
     return (
@@ -35,7 +38,7 @@ function Navbar({ onSubmit, logged, dispatch }) {
             <div className="navContent">
                 <h1>Formulário OMS</h1>
                 <div className="rightItems">
-                    <p>Acesso como <b>Fulano da Silva</b></p>
+                    <p>Acesso como <b>{localStorage.getItem('username')}</b></p>
                     <Button style={styles.Button} onClick={logout}>SAIR</Button>
                 </div>
                 
@@ -44,4 +47,4 @@ function Navbar({ onSubmit, logged, dispatch }) {
     );
 }
 
-export default connect(state => ({ logged: state.logged }))(Navbar);
+export default connect(state => ({ state: state }))(Navbar);

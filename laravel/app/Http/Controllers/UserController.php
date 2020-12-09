@@ -8,19 +8,25 @@ use Hash;
 
 class UserController extends Controller
 {
-    public function store(Request $request)
+    public function register(Request $request)
     {
         try {
-            $query = DB::select("CALL sp_insertuser('".$request->email."',
-                                                    '".$request->firstName."',
-                                                    '".$request->lastName."' ,
-                                                    '".$request->regionalCouncilCode."',
-                                                    '".$request->password."',
-                                                    '".$request->email."',
-                                                    '".$request->foneNumber."',
-                                                    @p_msg_retorno);");
+            $query = DB::select("CALL putuser('".$request->adminid."',
+                                                '".$request->adminGroupRoleid."',
+                                                '".$request->adminHospitalUnitid."' ,
+                                                '".$request->regionalCouncilCode."',
+                                                '".$request->email."',
+                                                '".$request->firstname."',
+                                                '".$request->lastname."',
+                                                '".$request->regionalcouncilcode."',
+                                                '".$request->password."' ,
+                                                '".$request->email."',
+                                                '".$request->fonenumber."',
+                                                '".$request->groupRole."',
+                                                @p_userid,
+                                                @p_msg_retorno);");
 
-            $query_msg = $query[0]->p_msg_retorno;
+            // $query_msg = $query[0]->p_msg_retorno;
 
             if($query_msg == 'Campos obrigatórios devem ser preenchidos. Verifique.'
             || $query_msg == 'Login já existe. Verifique.'

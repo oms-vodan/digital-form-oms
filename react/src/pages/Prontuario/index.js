@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from "react-router-dom";
 import './styles.css';
 import { useHistory } from "react-router-dom";
 import { TextField, Button, List, ListItem, ListItemText, ListItemIcon,  } from '@material-ui/core';
@@ -8,6 +9,8 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 function Prontuario() {
 
     const history = useHistory();
+
+    const location = useLocation();
 
     async function handleSearch(e) {
         e.preventDefault();
@@ -22,7 +25,7 @@ function Prontuario() {
         <main className="container prontuarios">
             <div>
                 <header className="index">
-                    <b>HUGG</b>
+                    <b>{location.state.hospitalName}</b>
                 </header>
                 <h2>Prontuário</h2>
             </div>

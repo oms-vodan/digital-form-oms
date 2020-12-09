@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import './styles.css';
 import { TextField, Button } from '@material-ui/core';
+import api from '../../services/api';
 
 import { connect } from 'react-redux';
 
@@ -16,10 +17,11 @@ const styles = {
   }
 };
 
-function userLogin() {
+function userLogin(userData) {
   return {
     type: 'TOGGLE_LOGIN',
     isLogged: true,
+    user: userData
   }
 }
 
@@ -36,9 +38,22 @@ function Login({ logged, dispatch }) {
   async function handleLogin(e) {
     e.preventDefault();
     console.log(form);
-    dispatch(userLogin());
-    localStorage.setItem('authToken', 'token');
-    history.replace("/prontuario");
+    const response = await api.post('/login',  {
+      login: form.email,
+      password: form.senha
+    });
+    console.log(response.data[0]);
+    if(response.data[0].userid) {
+      localStorage.setItem('authToken', 'token');
+      localStorage.setItem('username', response.data[0].firstname);
+      dispatch(userLogin(response.data));
+      if(response.data.length === 1) {
+        history.replace("/prontuario", { hospitalName: response.data[0].hospitalName, hospitalId: response.data[0].hospitalunitid });
+      } else {
+        history.replace("/hospital");
+      }
+      
+    }
   }
   
   function handleChange(e) {
