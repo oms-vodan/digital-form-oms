@@ -25,7 +25,9 @@ function Hospital({user}) {
                         </div>
                         
                         { (hospital.userrole === "Administrador") && 
-                            <Button variant="contained" color="primary">Cadastrar usuários</Button>
+                            <Button variant="contained" color="primary" onClick={ () => {
+                                history.push('/cadastro', { hospitalId: hospital.hospitalunitid, hospitalIndex: index})
+                            }}>Cadastrar usuários</Button>
                         }
                     </div>
                 ))}

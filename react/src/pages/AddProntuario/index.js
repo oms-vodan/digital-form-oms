@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './styles.css';
+import { useHistory } from "react-router-dom";
 import { TextField, Button } from '@material-ui/core';
 
 const styles = {
@@ -11,15 +12,18 @@ const styles = {
 
 function AddProntuario() {
 
-    const [pront, setPront] = useState()
+    const history = useHistory();
+
+    const [prontuario, setProntuario] = useState();
 
     function handleSubmit(e) {
         e.preventDefault()
-        console.log(pront)
+        console.log(prontuario)
+        history.push('/formulario', { modulo: 1 })
     }
 
     function handleChange(e) {
-        setPront(e.target.value)
+        setProntuario(e.target.value)
     }
 
     return (
@@ -28,12 +32,12 @@ function AddProntuario() {
                 <header className="index">
                     <b>HUGG</b>
                 </header>
-                <h2>Adicionar novo prontuário</h2>
+                <h2>Adicionar novo prontuariouário</h2>
             </div>
             <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                 <TextField name="prontuario" label="Número do prontuário" type="number" onChange={handleChange} />
-                <div className="submit-pront">
-                    <Button style={styles.Button} variant="contained" type="submit" color="primary" disabled={!pront}>Registrar</Button>
+                <div className="submit-prontuario">
+                    <Button style={styles.Button} variant="contained" type="submit" color="primary" disabled={!prontuario}>Registrar</Button>
                 </div>
             </form>
         </main>

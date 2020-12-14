@@ -7,7 +7,7 @@ main.add-prontuario form div.MuiTextField-root {
     width: 50%;
 }
 
-main.add-prontuario form .submit-pront {
+main.add-prontuario form .submit-prontuario {
     display: flex;
     align-items: center;
     justify-content: center;

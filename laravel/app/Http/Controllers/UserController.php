@@ -11,18 +11,17 @@ class UserController extends Controller
     public function register(Request $request)
     {
         try {
-            $query = DB::select("CALL putuser('".$request->adminid."',
+            $query_msg = DB::select("CALL putuser('".$request->adminId."',
                                                 '".$request->adminGroupRoleid."',
-                                                '".$request->adminHospitalUnitid."' ,
-                                                '".$request->regionalCouncilCode."',
+                                                '".$request->hospitalUnitId."' ,
                                                 '".$request->email."',
-                                                '".$request->firstname."',
-                                                '".$request->lastname."',
-                                                '".$request->regionalcouncilcode."',
-                                                '".$request->password."' ,
+                                                '".$request->nome."',
+                                                '".$request->sobrenome."',
+                                                '".$request->crm."',
+                                                '".$request->senha."' ,
                                                 '".$request->email."',
-                                                '".$request->fonenumber."',
-                                                '".$request->groupRole."',
+                                                '".$request->telefone."',
+                                                '".$request->funcao."',
                                                 @p_userid,
                                                 @p_msg_retorno);");
 
@@ -30,7 +29,11 @@ class UserController extends Controller
 
             if($query_msg == 'Campos obrigatórios devem ser preenchidos. Verifique.'
             || $query_msg == 'Login já existe. Verifique.'
-            || $query_msg == 'e-mail já cadastrado no sistema. Verifique.') {
+            || $query_msg == 'e-mail já cadastrado no sistema. Verifique.'
+            || $query_msg == 'Ocorreu um erro durante a execução do procedimento. Contacte o administrador!'
+            || $query_msg == 'Hospital não identificado no cadastro. Verifique.'
+            || $query_msg == 'Selecione um papel a ser exercido junto ao Hospital. '
+            || $query_msg == 'Problemas na inclusão de informações. Verifique.') {
                 return response()->json($query_msg, 404);
             }
             return response()->json($query_msg);

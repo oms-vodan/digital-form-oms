@@ -2,7 +2,7 @@ import { createStore } from 'redux';
 
 function checkStorage() {
     if(localStorage.getItem('authToken'))
-        return true;
+        return false;
     else
         return false;
 }

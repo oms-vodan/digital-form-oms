@@ -14,3 +14,8 @@ form {
     flex-direction: column;
     padding: 36px 24px;
 }
+
+span.error {
+    color: crimson;
+    text-align: center;
+}

@@ -22,6 +22,10 @@ form div.register-form span.error {
     color: crimson;
 }
 
+main.cadastro form div.MuiInput-underline {
+    width: 100%;
+}
+
 @media (max-width: 640px) {
     main.cadastro form .form-inputs {
         display: grid;

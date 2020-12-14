@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import './styles.css';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, InputLabel, Select, MenuItem } from '@material-ui/core';
+
+import api from '../../services/api';
+
+import { connect } from 'react-redux';
 
 const styles = {
     TextField: {
@@ -13,11 +18,19 @@ const styles = {
     }
 };
 
-function Cadastro() {
+function Cadastro({user}) {
+
+    const location = useLocation();
+    console.log(user)
 
     const [form, setForm] = useState({
+        adminId: user[location.state.hospitalIndex].userid,
+        adminGroupRoleid: user[location.state.hospitalIndex].grouproleid,
+        hospitalUnitId: location.state.hospitalId,
         nome: '',
         sobrenome: '',
+        crm: '',
+        funcao: '',
         email: '',
         telefone: '',
         senha: '',
@@ -49,13 +62,23 @@ function Cadastro() {
             [name]: value,
         });
 
-        
-
-        console.log(form)
+        console.log(form);
     }
 
-    function handleRegister(e) {
+    async function handleRegister(e) {
         e.preventDefault();
+
+        try {
+            const response = await api.post('/register', form);
+            console.log(response);
+            history.replace('/hospital');
+        } catch(e) {
+            console.log(e)
+            setForm({
+                ...form,
+                error: 'Não foi possível realizar o cadastro.'
+            })
+        }
         let validateErrors = validators();
         setForm({
             ...form,
@@ -72,6 +95,19 @@ function Cadastro() {
                 <div className="form-inputs">
                     <TextField style={styles.TextField} name="nome" label="Nome" type="text" onChange={handleChange} />
                     <TextField style={styles.TextField} name="sobrenome" label="Sobrenome" type="text" onChange={handleChange} />
+                    <TextField style={styles.TextField} name="crm" label="CRM" type="text" onChange={handleChange} />
+                    <div>
+                        <InputLabel>Função</InputLabel>
+                        <Select name="funcao" label="Funcao" value={form.funcao} onChange={handleChange}>
+                            <MenuItem value="Administrador">Administrador</MenuItem>
+                            <MenuItem value="ETL - Arquivos">ETL - Arquivos</MenuItem>
+                            <MenuItem value="ETL - BD a BD">ETL - BD a BD</MenuItem>
+                            <MenuItem value="Gestor de Ontologia">Gestor de Ontologia</MenuItem>
+                            <MenuItem value="Gestor de Repositório">Gestor de Repositório</MenuItem>
+                            <MenuItem value="Notificador Médico">Notificador Médico</MenuItem>
+                            <MenuItem value="Notificador Profissional de Saúde">Notificador Profissional de Saúde</MenuItem>
+                        </Select>
+                    </div> 
                     <TextField style={styles.TextField} name="email" label="Email" type="email" onChange={handleChange} />
                     <TextField style={styles.TextField} name="telefone" label="Telefone" type="text" onChange={handleChange} />
                     <TextField style={styles.TextField} name="senha" label="Senha" type="password" onChange={handleChange} />
@@ -81,7 +117,8 @@ function Cadastro() {
                 <div className="register-form">
                     <span className="error">{ form.error }</span>
                     <Button style={styles.Button} variant="contained" type="submit" color="primary" disabled={
-                        form.nome === '' || form.sobrenome === '' || form.email === '' || form.telefone === '' || form.senha === '' || form.confirmasenha === ''
+                        form.nome === '' || form.sobrenome === '' || form.email === '' || form.telefone === '' || form.senha === '' || form.confirmasenha === '' ||
+                        form.crm === '' || form.funcao === ''
                     }>Registrar</Button>
                 </div>
                 
@@ -90,4 +127,4 @@ function Cadastro() {
     );
 }
 
-export default Cadastro;
+export default connect(state => ({ user: state.user }))(Cadastro);
