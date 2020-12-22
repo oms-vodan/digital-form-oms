@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MedicalRecordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +20,6 @@ use App\Http\Controllers\UserController;
 Route::post('register/', [UserController::class, 'register']);
 Route::post('login/', [UserController::class, 'login']);
 
+Route::post('insertMedicalRecord/', [MedicalRecordController::class, 'insert']);
 
 Route::get('form/{id}', [FormController::class, 'show']);

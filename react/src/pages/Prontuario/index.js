@@ -6,7 +6,9 @@ import { TextField, Button, List, ListItem, ListItemText, ListItemIcon,  } from 
 import { Add } from '@material-ui/icons';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
-function Prontuario() {
+import { connect } from 'react-redux';
+
+function Prontuario({user}) {
 
     const history = useHistory();
 
@@ -37,7 +39,7 @@ function Prontuario() {
                     </Button>
                 </form>
                 <Button variant="outlined" color="primary" className="add-prontuario" onClick={ () => {
-                    history.push('/add-prontuario', { modulo: 1 })
+                    history.push('/add-prontuario', { hospitalIndex: location.state.hospitalIndex })
                 }}>
                     <Add color="primary" />
                     Novo Prontuário
@@ -59,4 +61,4 @@ function Prontuario() {
     );
 }
 
-export default Prontuario;
+export default connect(state => ({ user: state.user }))(Prontuario);

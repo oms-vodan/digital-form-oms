@@ -18,7 +18,7 @@ function Hospital({user}) {
                 {user.map((hospital, index) => (
                     <div className="item" key={hospital.hospitalunitid }>
                         <div onClick={ () => {
-                            history.push('/prontuario', { hospitalName: hospital.hospitalName, hospitalId: hospital.hospitalunitid })
+                            history.push('/prontuario', { hospitalName: hospital.hospitalName, hospitalIndex: index })
                         }}>
                             <h4> {hospital.hospitalName} </h4>
                             <p> {hospital.userrole} </p>
