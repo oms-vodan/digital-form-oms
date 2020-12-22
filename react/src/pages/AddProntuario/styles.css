@@ -9,9 +9,15 @@ main.add-prontuario form div.MuiTextField-root {
 
 main.add-prontuario form .submit-prontuario {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     margin-top: 16px;
+}
+
+main.add-prontuario form .submit-prontuario .error {
+  font-size: 16px;
+  color: crimson;
 }
 
 

@@ -17,9 +17,13 @@ use App\Http\Controllers\MedicalRecordController;
 |
 */
 
-Route::post('register/', [UserController::class, 'register']);
-Route::post('login/', [UserController::class, 'login']);
+Route::group(['middleware' => 'cors:api'], function() {
+    Route::post('register/', [UserController::class, 'register']);
+    Route::post('login/', [UserController::class, 'login']);
 
-Route::post('insertMedicalRecord/', [MedicalRecordController::class, 'insert']);
+    Route::post('insertMedicalRecord/', [MedicalRecordController::class, 'insert']);
 
-Route::get('form/{id}', [FormController::class, 'show']);
+    Route::get('form/{id}', [FormController::class, 'show']);
+});
+
+

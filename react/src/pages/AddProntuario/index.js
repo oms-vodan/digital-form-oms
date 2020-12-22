@@ -23,6 +23,8 @@ function AddProntuario({user}) {
 
     const [prontuario, setProntuario] = useState();
 
+    const [error, setError] = useState('');
+
     async function handleSubmit(e) {
         e.preventDefault()
         console.log(prontuario)
@@ -31,9 +33,16 @@ function AddProntuario({user}) {
             groupRoleid: user[location.state.hospitalIndex].grouproleid,
             hospitalUnitid: user[location.state.hospitalIndex].hospitalunitid,
             medicalRecord: prontuario
+        }).catch( function (error) {
+            console.log(error)
+            if(error.response.data.Message) {
+                setError(error.response.data.Message);
+            } else {
+                setError(error.response.data.msgRetorno);
+            }
         });
-
         console.log(response);
+
         //history.push('/formulario', { modulo: 1 })
     }
 
@@ -54,6 +63,7 @@ function AddProntuario({user}) {
             <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                 <TextField name="prontuario" label="Número do prontuário" type="number" onChange={handleChange} />
                 <div className="submit-prontuario">
+                    <span className="error">{ error }</span>
                     <Button style={styles.Button} variant="contained" type="submit" color="primary" disabled={!prontuario}>Registrar</Button>
                 </div>
             </form>
