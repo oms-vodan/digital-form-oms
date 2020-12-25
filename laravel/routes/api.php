@@ -22,6 +22,7 @@ Route::group(['middleware' => 'cors:api'], function() {
     Route::post('login/', [UserController::class, 'login']);
 
     Route::post('insertMedicalRecord/', [MedicalRecordController::class, 'insert']);
+    Route::post('searchMedicalRecord/', [MedicalRecordController::class, 'getModulesMedicalRecord']);
 
     Route::get('form/{id}', [FormController::class, 'show']);
 });

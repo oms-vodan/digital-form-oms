@@ -31,8 +31,17 @@ class MedicalRecordController extends Controller
 
             return response()->json($query_msg);
         } catch(Exception $e) {
-            return response()->json($e.getMessage(), 500);
+            return response()->json($e, 500);
         }
         
+    }
+
+    public function getModulesMedicalRecord(Request $request) {
+        try {
+            $query_msg = DB::select("CALL getModulesMedicalRecord('{$request->medicalRecord}', {$request->hospitalUnitId})");
+            return response()->json($query_msg);
+        } catch(Exception $e) {
+            return response()->json($e, 500);
+        }
     }
 }
