@@ -34,7 +34,7 @@ function Prontuario({user}) {
             console.log(error)
             console.log(error.response.data)
         });
-        console.log(response.data.length)
+
         if(response.data) {
             if(response.data[0])
                 setError(response.data[0].msgRetorno)
@@ -104,7 +104,11 @@ function Prontuario({user}) {
             { (modules.length > 0) && (!error) &&
                 <div className="prontuario-result">
                     <div className="title-table">
-                        <h4>Módulos cadastrados do prontuário { modules[0].medicalRecord } <Edit /></h4>
+                        <h4>Módulos cadastrados do prontuário { modules[0].medicalRecord }
+                        <Edit onClick={ () => {
+                            history.push('/editar-prontuario', { hospitalIndex: location.state.hospitalIndex, prontuario: modules[0].medicalRecord, participantId: modules[0].participantID })
+                        }}/>
+                        </h4>
                         <Button variant="outlined" color="primary" className="add-modulo" onClick={ () => {
                         history.push('/modulos', { hospitalIndex: location.state.hospitalIndex, prontuario: modules[0].medicalRecord })
                         }}>

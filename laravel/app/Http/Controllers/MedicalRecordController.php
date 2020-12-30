@@ -43,5 +43,25 @@ class MedicalRecordController extends Controller
         } catch(Exception $e) {
             return response()->json($e, 500);
         }
+    } 
+
+    public function edit(Request $request) {
+        try {
+            $query_msg = DB::select("CALL putMedicalRecord('{$request->userid}',
+                                                           '{$request->groupRoleid}',
+                                                           '{$request->hospitalUnitid}',
+                                                           '1',
+                                                           '{$request->participantId}',
+                                                           '{$request->medicalRecordNew}',
+                                                           @p_msg_retorno)");
+            $query_msg = $query_msg[0];
+            if($query_msg->msgRetorno !== 'Alteração realizada com sucesso.') {
+                return response()->json($query_msg, 404);
+            }
+            
+            return response()->json($query_msg);
+        } catch(Exception $e) {
+            return response()->json($e, 500);
+        }
     }
 }
