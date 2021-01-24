@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MedicalRecordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,8 +17,16 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::post('register/', [UserController::class, 'register']);
-Route::post('login/', [UserController::class, 'login']);
+Route::group(['middleware' => 'cors:api'], function() {
+    Route::post('register/', [UserController::class, 'register']);
+    Route::post('login/', [UserController::class, 'login']);
+
+    Route::post('insertMedicalRecord/', [MedicalRecordController::class, 'insert']);
+    Route::post('searchMedicalRecord/', [MedicalRecordController::class, 'getModulesMedicalRecord']);
+    Route::post('editMedicalRecord/', [MedicalRecordController::class, 'edit']);
+
+    Route::get('form/{id}', [FormController::class, 'show']);
+    Route::post('form/{id}', [FormController::class, 'store']);
+});
 
 
-Route::get('form/{id}', [FormController::class, 'show']);

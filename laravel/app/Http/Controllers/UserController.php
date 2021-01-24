@@ -11,7 +11,7 @@ class UserController extends Controller
     public function register(Request $request)
     {
         try {
-            $query_msg = DB::select("CALL putuser('".$request->adminId."',
+            $query_msg = DB::select("CALL postuser('".$request->adminId."',
                                                 '".$request->adminGroupRoleid."',
                                                 '".$request->hospitalUnitId."' ,
                                                 '".$request->email."',

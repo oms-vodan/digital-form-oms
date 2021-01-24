@@ -52,7 +52,7 @@ function Login({ logged, dispatch }) {
         localStorage.setItem('username', response.data[0].firstname);
         dispatch(userLogin(response.data));
         if(response.data.length === 1) {
-          history.replace("/prontuario", { hospitalName: response.data[0].hospitalName, hospitalId: response.data[0].hospitalunitid });
+          history.replace("/prontuario", { hospitalName: response.data[0].hospitalName, hospitalId: response.data[0].hospitalunitid, hospitalIndex: 0 });
         } else {
           history.replace("/hospital");
         }

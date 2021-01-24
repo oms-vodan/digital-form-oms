@@ -9,13 +9,17 @@ function checkStorage() {
 
 const INITIAL_STATE = {
     logged: checkStorage(),
-    user: {}
+    user: {},
+    participantId: null,
 }
 
 function reducer(state = INITIAL_STATE, action) {
     console.log(action);
 
     if(action.type === 'TOGGLE_LOGIN' || action.type === 'TOGGLE_LOGOUT') {
+        console.log({...state,
+            logged: action.isLogged,
+            user: action.user})
         return { 
             ...state,
             logged: action.isLogged,
@@ -27,6 +31,13 @@ function reducer(state = INITIAL_STATE, action) {
         return {
             ...state,
             user: action
+        }
+    }
+
+    if(action.type === 'STORE_PARTICIPANT_ID') {
+        return {
+            ...state,
+            participantId: action.participantId
         }
     }
 

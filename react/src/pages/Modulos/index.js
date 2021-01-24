@@ -1,16 +1,21 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import './styles.css';
 
-function Modulos() {
+import { connect } from 'react-redux';
+
+function Modulos({user}) {
 
     const history = useHistory();
+
+    const location = useLocation();
 
     return (
         <main className="container">
             <div>
                 <header className="index">
-                    HUGG > <b>189123492</b>
+                    { user[location.state.hospitalIndex].hospitalName } > <b>{ location.state.prontuario }</b>
                 </header>
                 <h2>Formulário de Registro de caso</h2>
             </div>
@@ -32,4 +37,4 @@ function Modulos() {
     );
 }
 
-export default Modulos;
+export default connect(state => ({ user: state.user }))(Modulos);

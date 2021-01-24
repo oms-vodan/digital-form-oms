@@ -15,7 +15,7 @@ const styles = {
     }
 };
 
-function AddProntuario({user}) {
+function EditProntuario({user}) {
 
     const history = useHistory();
 
@@ -27,12 +27,13 @@ function AddProntuario({user}) {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        console.log(prontuario)
-        const response = await api.post('/insertMedicalRecord', {
+         
+        const response = await api.post('/editMedicalRecord', {
             userid: user[location.state.hospitalIndex].userid,
             groupRoleid: user[location.state.hospitalIndex].grouproleid,
             hospitalUnitid: user[location.state.hospitalIndex].hospitalunitid,
-            medicalRecord: prontuario
+            participantId: location.state.participantId,
+            medicalRecordNew: prontuario
         }).catch( function (error) {
             console.log(error)
             if(error.response.data.Message) {
@@ -41,6 +42,10 @@ function AddProntuario({user}) {
                 setError(error.response.data.msgRetorno);
             }
         });
+
+        if(response)
+            if(response.data.msgRetorno === "Alteração realizada com sucesso.")
+                history.goBack()
         console.log(response);
 
         //history.push('/formulario', { modulo: 1 })
@@ -58,17 +63,17 @@ function AddProntuario({user}) {
                 <header className="index">
                     <b>{user[location.state.hospitalIndex].hospitalName}</b>
                 </header>
-                <h2>Adicionar novo prontuário</h2>
+                <h2>Editar prontuário {location.state.prontuario}</h2>
             </div>
             <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-                <TextField name="prontuario" label="Número do prontuário" type="number" onChange={handleChange} />
+                <TextField name="prontuario" label="Número do prontuário" type="number" defaultValue={location.state.prontuario} onChange={handleChange} />
                 <div className="submit-prontuario">
                     <span className="error">{ error }</span>
-                    <Button style={styles.Button} variant="contained" type="submit" color="primary" disabled={!prontuario}>Registrar</Button>
+                    <Button style={styles.Button} variant="contained" type="submit" color="primary" disabled={!prontuario}>Atualizar</Button>
                 </div>
             </form>
         </main>
     );
 }
 
-export default connect(state => ({ user: state.user }))(AddProntuario);
+export default connect(state => ({ user: state.user }))(EditProntuario);
