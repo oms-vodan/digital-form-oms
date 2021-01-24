@@ -3,9 +3,14 @@ import './styles.css';
 import { useLocation } from "react-router-dom";
 import { TextField, Button, FormLabel, RadioGroup, Radio, FormControlLabel, InputLabel, Select, MenuItem } from '@material-ui/core';
 import api from '../../services/api';
+import { connect } from 'react-redux';
 
-function Formulario() {
 
+function Formulario({logged, user, participantId}) {
+    console.log('logged',logged)
+    console.log('logged',logged)
+    console.log('user',user)
+    console.log('user',user)
     const location = useLocation();
 
     const titles = ['Admissão','Acompanhamento','Desfecho']
@@ -64,9 +69,19 @@ function Formulario() {
     }
 
 
-    function submit(e) {
+    async function submit(e) {
         e.preventDefault();
-        console.log(form);
+        const request = {
+            respostas: JSON.stringify(form),
+            info: user[0],
+            participantId: participantId,
+            dataAcompanhamento: form[168],
+            modulo: location.state.modulo
+        }
+
+        const response = await api.post('/form/' + location.state.modulo, request);
+
+        console.log('response',response);
     }
 
     return (
@@ -116,12 +131,12 @@ function Formulario() {
                             }
 
                             {/* Se for do tipo List question ou YNU_Question ou YNUN_Question e tenha menos de 6 opções */}
-                            { (question.qst_type === "List question" || question.qst_type === "YNU_Question" || question.qst_type === "YNUN_Question") && ( (question.rsp_pad.split(' | ')).length < 6 ) &&
+                            { (question.qst_type === "List question" || question.qst_type === "YNU_Question" || question.qst_type === "YNUN_Question") && ( (question.rsp_pad.split(',')).length < 6 ) &&
                                 ( (question.sub_qst !== '' && (form[question['idsub_qst']] === 'Sim' || Number(form[question['idsub_qst']] + 1) > 0)) || question.sub_qst === '') &&
                             <div className="MuiTextField-root">
                                 <FormLabel component="legend">{question.dsc_qst}</FormLabel>
                                 <RadioGroup aria-label={question.dsc_qst} name={String(question.qstId)} onChange={handleChange}>
-                                    {question.rsp_pad.split(' | ').map((item) => (
+                                    {question.rsp_pad.split(',').map((item) => (
                                         <FormControlLabel key={item} value={item} control={<Radio />} label={item} />
                                     ))}
                                 </RadioGroup>
@@ -129,12 +144,12 @@ function Formulario() {
                             } 
 
                             {/* Se for do tipo List question ou YNU_Question ou YNUN_Question e tenha 6 ou mais opções */}
-                            { (question.qst_type === "List question" || question.qst_type === "YNU_Question" || question.qst_type === "YNUN_Question") && ( (question.rsp_pad.split(' | ')).length >= 6 ) &&
+                            { (question.qst_type === "List question" || question.qst_type === "YNU_Question" || question.qst_type === "YNUN_Question") && ( (question.rsp_pad.split(',')).length >= 6 ) &&
                                 ( (question.sub_qst !== '' && (form[question['idsub_qst']] === 'Sim' || Number(form[question['idsub_qst']] + 1) > 0)) || question.sub_qst === '') &&
                             <div className="MuiTextField-root">
                                 <InputLabel>{question.dsc_qst}</InputLabel>
                                 <Select value={form[String(question.qstId)] || ''} aria-label={question.dsc_qst} name={String(question.qstId)} onChange={handleChange}>
-                                        {question.rsp_pad.split(' | ').map((item) => (
+                                        {question.rsp_pad.split(',').map((item) => (
                                             <MenuItem key={item} value={item}>{ item }</MenuItem>
                                         ))}
                                 </Select>
@@ -171,5 +186,4 @@ function Formulario() {
         </main>
     );
 }
-
-export default Formulario;
+export default connect(state => ({ logged: state.logged, user:state.user, participantId: state.participantId }))(Formulario);

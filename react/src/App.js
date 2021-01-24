@@ -8,7 +8,7 @@ import Navbar from './components/Navbar'
 
 
 
-function App({logged}) {
+function App({logged, user}) {
 
   function IsLogged(props) {
     console.log(props);
@@ -26,4 +26,4 @@ function App({logged}) {
   );
 }
 
-export default connect(state => ({ logged: state.logged }))(App);
+export default connect(state => ({ logged: state.logged }, {user:state.user}))(App);

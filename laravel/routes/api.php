@@ -26,6 +26,7 @@ Route::group(['middleware' => 'cors:api'], function() {
     Route::post('editMedicalRecord/', [MedicalRecordController::class, 'edit']);
 
     Route::get('form/{id}', [FormController::class, 'show']);
+    Route::post('form/{id}', [FormController::class, 'store']);
 });
 
 

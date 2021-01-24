@@ -9,7 +9,14 @@ import { connect } from 'react-redux';
 
 import api from '../../services/api';
 
-function Prontuario({user}) {
+function setParticipantId(participantId) {
+    return {
+      type: 'STORE_PARTICIPANT_ID',
+      participantId: participantId
+    }
+  }
+
+function Prontuario({user, dispatch}) {
 
     const [search, setSearch] = useState('')
     const [error, setError] = useState('')
@@ -34,7 +41,7 @@ function Prontuario({user}) {
             console.log(error)
             console.log(error.response.data)
         });
-
+        dispatch(setParticipantId(response.data[0].participantID));
         if(response.data) {
             if(response.data[0])
                 setError(response.data[0].msgRetorno)
