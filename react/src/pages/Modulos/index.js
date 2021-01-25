@@ -1,11 +1,19 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import api from '../../services/api';
+
 import './styles.css';
 
 import { connect } from 'react-redux';
 
-function Modulos({user}) {
+ function Modulos({user}) {
+    const [responseQuantityModules, setResponseQuantityModules] = useState([]);
+
+    useEffect( async () => {
+        const { data } = await api.get('/form');
+        setResponseQuantityModules(data)
+    },[])
 
     const history = useHistory();
 
@@ -20,18 +28,13 @@ function Modulos({user}) {
                 <h2>Formulário de Registro de caso</h2>
             </div>
             <div className="modulos-list">
-                <div className="item" onClick={ () => {
-                    history.push('/formulario', { modulo: 2 })
-                }}>
-                    <h4>Módulo 2</h4>
-                    <p> Acompanhamento do paciente (frequência de conclusão determinada pelos recursos disponíveis)</p>
-                </div>
-                <div className="item" onClick={ () => {
-                    history.push('/formulario', { modulo: 3 })
-                }}>
-                    <h4>Módulo 3</h4>
-                    <p>Alta ou Morte do paciente</p>
-                </div>
+                {responseQuantityModules.map((item) => (
+                    <div className="item" onClick={ () => {
+                        history.push('/formulario', { modulo: item.crfFormsId })}}>
+                        <h4>Módulo {item.crfFormsId}</h4>
+                        <p> {item.description}</p>
+                    </div>
+                ))}   
             </div>
         </main>
     );

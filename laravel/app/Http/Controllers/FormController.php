@@ -32,4 +32,8 @@ class FormController extends Controller
          return response()->json($e, 500);
        }
     }
+
+    public function search(){
+        return response()->json(DB::select("CALL getcrfForms('1')"));
+    }
 }
