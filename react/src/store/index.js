@@ -17,7 +17,7 @@ function reducer(state = INITIAL_STATE, action) {
     console.log(action);
 
     if(action.type === 'TOGGLE_LOGIN' || action.type === 'TOGGLE_LOGOUT') {
-        console.log({...state,
+        console.log('LOGADO',{...state,
             logged: action.isLogged,
             user: action.user})
         return { 

@@ -26,4 +26,4 @@ function App({logged, user}) {
   );
 }
 
-export default connect(state => ({ logged: state.logged }, {user:state.user}))(App);
+export default connect(state => ({ logged: state.logged }))(App);
