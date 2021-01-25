@@ -20,6 +20,11 @@ main.add-prontuario form .submit-prontuario .error {
   color: crimson;
 }
 
+main.add-prontuario form .submit-prontuario .success {
+  font-size: 16px;
+  color: limegreen;
+}
+
 
 /* Removendo setas do input de número */
 

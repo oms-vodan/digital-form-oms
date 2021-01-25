@@ -41,7 +41,10 @@ function Prontuario({user, dispatch}) {
             console.log(error)
             console.log(error.response.data)
         });
-        dispatch(setParticipantId(response.data[0].participantID));
+        console.log(response.data);
+        if(response.data.length > 0) {
+            dispatch(setParticipantId(response.data[0].participantID));
+        }
         if(response.data) {
             if(response.data[0])
                 setError(response.data[0].msgRetorno)

@@ -24,6 +24,7 @@ function AddProntuario({user}) {
     const [prontuario, setProntuario] = useState();
 
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -41,12 +42,16 @@ function AddProntuario({user}) {
                 setError(error.response.data.msgRetorno);
             }
         });
-        console.log(response);
+
+        if(response) {
+            setSuccess(response.data.msgRetorno);
+        }
 
         //history.push('/formulario', { modulo: 1 })
     }
 
     function handleChange(e) {
+        setError('');
         console.log(user)
         console.log(location.state)
         setProntuario(e.target.value)
@@ -64,6 +69,7 @@ function AddProntuario({user}) {
                 <TextField name="prontuario" label="Número do prontuário" type="number" onChange={handleChange} />
                 <div className="submit-prontuario">
                     <span className="error">{ error }</span>
+                    <span className="success">{ success }</span>
                     <Button style={styles.Button} variant="contained" type="submit" color="primary" disabled={!prontuario}>Registrar</Button>
                 </div>
             </form>
