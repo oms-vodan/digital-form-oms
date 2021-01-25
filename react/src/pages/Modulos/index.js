@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import { useHistory } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import React, {useEffect, useState,} from 'react';
+import { useHistory, useLocation } from "react-router-dom";
 import api from '../../services/api';
 
 import './styles.css';
@@ -10,9 +9,12 @@ import { connect } from 'react-redux';
  function Modulos({user}) {
     const [responseQuantityModules, setResponseQuantityModules] = useState([]);
 
-    useEffect( async () => {
-        const { data } = await api.get('/form');
-        setResponseQuantityModules(data)
+    useEffect( () => {
+        async function setModules() {
+            const { data } = await api.get('/form');
+            setResponseQuantityModules(data)
+        }
+        setModules();
     },[])
 
     const history = useHistory();
@@ -30,11 +32,12 @@ import { connect } from 'react-redux';
             <div className="modulos-list">
                 {responseQuantityModules.map((item) => (
                     <div className="item" onClick={ () => {
-                        history.push('/formulario', { modulo: item.crfFormsId })}}>
-                        <h4>Módulo {item.crfFormsId}</h4>
-                        <p> {item.description}</p>
-                    </div>
-                ))}   
+                    history.push('/formulario', { modulo: item.crfFormsId })
+                }}>
+                    <h4>Módulo {item.crfFormsId}</h4>
+                    <p>{item.description}</p>
+                </div>
+                ))}
             </div>
         </main>
     );
