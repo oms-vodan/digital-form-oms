@@ -136,7 +136,9 @@ function Prontuario({user, dispatch}) {
                         </thead>
                         <tbody>
                             {modules.map((module, index) => (
-                                <tr key={module.formrecordid} className="data-items">
+                                <tr key={module.formrecordid} className="data-items" onClick={ () => {
+                                    history.push('/formulario', { modulo: module.crfformsid, formRecordId: module.formrecordid })
+                                }}>
                                     <td>{ module.moduleName }</td>
                                     <td>{ module.dataRefer.getDate() + 1 }/{ module.dataRefer.getMonth() + 1 }/{ module.dataRefer.getFullYear() }</td>
                                     <td>{ Math.ceil(module.questionAnswerTot * 100 / module.questionTot) }%</td>

@@ -30,8 +30,9 @@ import { connect } from 'react-redux';
                 <h2>Formulário de Registro de caso</h2>
             </div>
             <div className="modulos-list">
-                {responseQuantityModules.map((item) => (
-                    <div className="item" onClick={ () => {
+                {responseQuantityModules.map((item, index) => (
+                    <div key={index}
+                        className="item" onClick={ () => {
                     history.push('/formulario', { modulo: item.crfFormsId })
                 }}>
                     <h4>Módulo {item.crfFormsId}</h4>

@@ -23,12 +23,43 @@ function Formulario({logged, user, participantId}) {
 
     useEffect(() => {
         async function loadForm() {
-          const response = await api.get('/form/' + location.state.modulo);
-          console.log(response.data);
-          setQuestions(response.data);
+            const response = await api.get('/form/' + location.state.modulo);
+            console.log(response.data);
+            setQuestions(response.data);
+
+            // Caso seja uma atualização de formulário
+            if(location.state.formRecordId) {
+                console.log(location.state.formRecordId);
+            getRecordedResponses(location.state.formRecordId)
+            }
         }
         loadForm();
     }, [])
+
+    async function getRecordedResponses(formRecordId) {
+        const response = await api.get(`/formResponses/${formRecordId}`);
+        console.log('RESPOSTAS', response.data);
+        if(response.data) {
+            fillForm(response.data);
+        }
+    }
+
+    function fillForm(responses) {
+        let formWithResponse = { }
+        for(let response of responses) {
+            console.log(response);
+            if(response.answer != null) {
+                console.log(response.dsc_qst, ' TEM RESPOSTA')
+                if(response.rsp_listofvalue)
+                    formWithResponse[response.qstId] = response.rsp_listofvalue
+                else
+                    formWithResponse[response.qstId] = response.answer
+            }
+        }
+
+        setForm(formWithResponse);
+        console.log(form);
+    }
 
     function getCurrentDate() {
         var today = new Date();
@@ -71,6 +102,8 @@ function Formulario({logged, user, participantId}) {
 
     async function submit(e) {
         e.preventDefault();
+        console.log(form);
+        return;
         const request = {
             respostas: JSON.stringify(form),
             info: user[0],
@@ -83,7 +116,7 @@ function Formulario({logged, user, participantId}) {
 
         console.log('response',response);
 
-        history.replace("/prontuario");
+        history.go(-2);
     }
 
     return (
@@ -122,6 +155,7 @@ function Formulario({logged, user, participantId}) {
                                         shrink: true,
                                     }}
                                     onChange={handleChange}
+                                    value={form[question.qstId] ? form[question.qstId] : '' }
                                 />
                             </div>
                             }
@@ -129,7 +163,7 @@ function Formulario({logged, user, participantId}) {
                             {/* Se for do tipo Number question*/}
                             { (question.qst_type === "Number question") && 
                                 ( (question.sub_qst !== '' && (form[question['idsub_qst']] === 'Sim' || Number(form[question['idsub_qst']] + 1) > 0)) || question.sub_qst === '') &&
-                            <TextField type="number" name={String(question.qstId)} label={question.dsc_qst} onChange={handleChange}/>
+                            <TextField type="number" name={String(question.qstId)} label={question.dsc_qst} onChange={handleChange} value={form[question.qstId] ? form[question.qstId] : '' } />
                             }
 
                             {/* Se for do tipo List question ou YNU_Question ou YNUN_Question e tenha menos de 6 opções */}
@@ -137,7 +171,7 @@ function Formulario({logged, user, participantId}) {
                                 ( (question.sub_qst !== '' && (form[question['idsub_qst']] === 'Sim' || Number(form[question['idsub_qst']] + 1) > 0)) || question.sub_qst === '') &&
                             <div className="MuiTextField-root">
                                 <FormLabel component="legend">{question.dsc_qst}</FormLabel>
-                                <RadioGroup aria-label={question.dsc_qst} name={String(question.qstId)} onChange={handleChange}>
+                                <RadioGroup aria-label={question.dsc_qst} name={String(question.qstId)} onChange={handleChange} value={form[question.qstId] ? form[question.qstId] : '' }>
                                     {question.rsp_pad.split(',').map((item) => (
                                         <FormControlLabel key={item} value={item} control={<Radio />} label={item} />
                                     ))}
@@ -150,7 +184,7 @@ function Formulario({logged, user, participantId}) {
                                 ( (question.sub_qst !== '' && (form[question['idsub_qst']] === 'Sim' || Number(form[question['idsub_qst']] + 1) > 0)) || question.sub_qst === '') &&
                             <div className="MuiTextField-root">
                                 <InputLabel>{question.dsc_qst}</InputLabel>
-                                <Select value={form[String(question.qstId)] || ''} aria-label={question.dsc_qst} name={String(question.qstId)} onChange={handleChange}>
+                                <Select value={form[String(question.qstId)] || ''} aria-label={question.dsc_qst} name={String(question.qstId)} onChange={handleChange} value={form[question.qstId] ? form[question.qstId] : '' }>
                                         {question.rsp_pad.split(',').map((item) => (
                                             <MenuItem key={item} value={item}>{ item }</MenuItem>
                                         ))}
@@ -161,7 +195,7 @@ function Formulario({logged, user, participantId}) {
                             {/* Se for do tipo Text_Question ou Laboratory question ou Ventilation question*/}
                             { (question.qst_type === "Text_Question" || question.qst_type === "Laboratory question" || question.qst_type === "Ventilation question") && 
                                 ( (question.sub_qst !== '' && (form[question['idsub_qst']] === 'Sim' || Number(form[question['idsub_qst']] + 1) > 0)) || question.sub_qst === '') &&
-                            <TextField name={String(question.qstId)} label={question.dsc_qst} onChange={handleChange}/>
+                            <TextField name={String(question.qstId)} label={question.dsc_qst} onChange={handleChange} value={form[question.qstId] ? form[question.qstId] : '' }/>
                             }
 
                             {/* Se for do tipo Boolean_Question*/}
@@ -169,7 +203,7 @@ function Formulario({logged, user, participantId}) {
                                 ( (question.sub_qst !== '' && (form[question['idsub_qst']] === 'Sim' || Number(form[question['idsub_qst']] + 1) > 0)) || question.sub_qst === '') &&
                             <div className="MuiTextField-root">
                                 <FormLabel component="legend">{question.dsc_qst}</FormLabel>
-                                <RadioGroup aria-label={question.dsc_qst} name={String(question.qstId)} onChange={handleChange}>
+                                <RadioGroup aria-label={question.dsc_qst} name={String(question.qstId)} onChange={handleChange} value={form[question.qstId] ? form[question.qstId] : '' }>
                                     <FormControlLabel value='true' control={<Radio />} label='Sim' />
                                     <FormControlLabel value='false' control={<Radio />} label='Não' />
                                 </RadioGroup>
