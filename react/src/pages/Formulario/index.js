@@ -4,13 +4,11 @@ import { useLocation } from "react-router-dom";
 import { TextField, Button, FormLabel, RadioGroup, Radio, FormControlLabel, InputLabel, Select, MenuItem } from '@material-ui/core';
 import api from '../../services/api';
 import { connect } from 'react-redux';
+import { useHistory } from "react-router-dom";
 
 
 function Formulario({logged, user, participantId}) {
-    console.log('logged',logged)
-    console.log('logged',logged)
-    console.log('user',user)
-    console.log('user',user)
+
     const location = useLocation();
 
     const titles = ['Admissão','Acompanhamento','Desfecho']
@@ -18,6 +16,8 @@ function Formulario({logged, user, participantId}) {
     const [form, setForm] = useState({
 
     });
+
+    const history = useHistory();
 
     const [questions, setQuestions] = useState([]);
 
@@ -82,6 +82,8 @@ function Formulario({logged, user, participantId}) {
         const response = await api.post('/form/' + location.state.modulo, request);
 
         console.log('response',response);
+
+        history.replace("/prontuario");
     }
 
     return (
