@@ -137,7 +137,7 @@ function Prontuario({user, dispatch}) {
                         <tbody>
                             {modules.map((module, index) => (
                                 <tr key={module.formrecordid} className="data-items" onClick={ () => {
-                                    history.push('/formulario', { modulo: module.crfformsid, formRecordId: module.formrecordid })
+                                    history.push('/formulario', { modulo: module.crfformsid, formRecordId: module.formrecordid, hospitalIndex: location.state.hospitalIndex })
                                 }}>
                                     <td>{ module.moduleName }</td>
                                     <td>{ module.dataRefer.getDate() + 1 }/{ module.dataRefer.getMonth() + 1 }/{ module.dataRefer.getFullYear() }</td>

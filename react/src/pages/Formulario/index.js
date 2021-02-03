@@ -20,17 +20,19 @@ function Formulario({logged, user, participantId}) {
     const history = useHistory();
 
     const [questions, setQuestions] = useState([]);
+    const [loadedResponses, setLoadedResponses] = useState(false);
 
     useEffect(() => {
         async function loadForm() {
             const response = await api.get('/form/' + location.state.modulo);
             console.log(response.data);
             setQuestions(response.data);
+            console.log(location.state.hospitalIndex);
 
             // Caso seja uma atualização de formulário
             if(location.state.formRecordId) {
                 console.log(location.state.formRecordId);
-            getRecordedResponses(location.state.formRecordId)
+                getRecordedResponses(location.state.formRecordId)
             }
         }
         loadForm();
@@ -58,6 +60,7 @@ function Formulario({logged, user, participantId}) {
         }
 
         setForm(formWithResponse);
+        setLoadedResponses(true)
         console.log(form);
     }
 
@@ -99,20 +102,57 @@ function Formulario({logged, user, participantId}) {
         }
     }
 
+    function getIdFromDateQuestion() {
+        switch (location.state.modulo) {
+            case 1:
+                return 167
+            case 2:
+                return 168
+            case 3:
+                return 124
+            
+        }
+    }
+
 
     async function submit(e) {
         e.preventDefault();
         console.log(form);
-        return;
-        const request = {
-            respostas: JSON.stringify(form),
-            info: user[0],
-            participantId: participantId,
-            dataAcompanhamento: form[168],
-            modulo: location.state.modulo
-        }
 
-        const response = await api.post('/form/' + location.state.modulo, request);
+        let request;
+        let dateQuestionId = getIdFromDateQuestion();
+        let response;
+
+        // Caso seja uma atualização de formulário
+        if(location.state.formRecordId) {
+            console.log('ATUALIZAÇÃO DO FORM ', location.state.formRecordId);
+
+            request = {
+                respostas: JSON.stringify(form),
+                info: user[location.state.hospitalIndex],
+                participantId: participantId,
+                dataAcompanhamento: form[dateQuestionId],
+                modulo: location.state.modulo,
+                formRecordId: location.state.formRecordId
+            }
+
+
+            console.log( [ request.info['userid'], request.info['grouproleid'], request.info['hospitalunitid'], request.participantId, 1, request.modulo, request.formRecordId, request.respostas ]);
+
+            response = await api.put('/form/' + location.state.modulo, request);
+            
+        } else { // Caso seja um novo formulário
+            request = {
+                respostas: JSON.stringify(form),
+                info: user[location.state.hospitalIndex],
+                participantId: participantId,
+                dataAcompanhamento: form[dateQuestionId],
+                modulo: location.state.modulo
+            }
+    
+            response = await api.post('/form/' + location.state.modulo, request);
+        }
+        
 
         console.log('response',response);
 
@@ -128,7 +168,7 @@ function Formulario({logged, user, participantId}) {
                 <h2>Módulo { location.state.modulo } - { titles[location.state.modulo-1] }</h2>
                 <form className="module" onSubmit={submit}>
                     <div>
-                    { questions.length === 0 &&
+                    { questions.length === 0 && (location.state.formRecordId ? !loadedResponses : true) &&
                         <div className="loading">
                             <img src="assets/loading.svg" alt="Carregando"/>
                         </div>
