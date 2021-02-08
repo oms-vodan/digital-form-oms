@@ -163,7 +163,7 @@ function Formulario({logged, user, participantId}) {
         <main className="container">
             <div>
                 <header className="index">
-                    HUGG > 189123492 > <b>{ titles[location.state.modulo-1] }</b>
+                    {location.state.hospitalName} > 100017029697 > <b>{ titles[location.state.modulo-1] }</b>
                 </header>
                 <h2>Módulo { location.state.modulo } - { titles[location.state.modulo-1] }</h2>
                 <form className="module" onSubmit={submit}>

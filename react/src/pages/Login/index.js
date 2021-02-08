@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import './styles.css';
 import { TextField, Button } from '@material-ui/core';
 import api from '../../services/api';
+//import logo from '../../../public/assets/logo-vodan.png';
 
 import { connect } from 'react-redux';
 
@@ -81,6 +82,7 @@ function Login({ logged, dispatch }) {
   return (
     <div className="container login">
       <form noValidate autoComplete="off" onSubmit={handleLogin}>
+        <img src="assets/logo-vodan.png" />
         <TextField style={styles.TextField} name="email" label="Email" type="email" onChange={handleChange} />
         <TextField style={styles.TextField} name="senha" label="Senha" type="password" onChange={handleChange} />
         <span className="error">{error}</span>

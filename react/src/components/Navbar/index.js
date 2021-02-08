@@ -36,7 +36,10 @@ function Navbar({ onSubmit, state, dispatch }) {
     return (
         <nav>
             <div className="navContent">
-                <h1>Formulário OMS</h1>
+                <div className="leftItems">
+                    <img src="assets/logo-icon.png" />
+                    <h1>Formulário OMS</h1>
+                </div>
                 <div className="rightItems">
                     <p>Acesso como <b>{localStorage.getItem('username')}</b></p>
                     <Button style={styles.Button} onClick={logout}>SAIR</Button>
