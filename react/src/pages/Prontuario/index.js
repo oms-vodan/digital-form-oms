@@ -21,6 +21,7 @@ function Prontuario({user, dispatch}) {
     const [search, setSearch] = useState('')
     const [error, setError] = useState('')
     const [modules, setModules] = useState([])
+    const [modulesLoaded, setModulesLoaded] = useState(false)
 
     const history = useHistory();
 
@@ -34,6 +35,9 @@ function Prontuario({user, dispatch}) {
                 hospitalUnitId: user[location.state.hospitalIndex].hospitalunitid,
             }
         )
+
+        setError('')
+        setModulesLoaded(false);
         const response = await api.post('/searchMedicalRecord', {
             medicalRecord: search,
             hospitalUnitId: user[location.state.hospitalIndex].hospitalunitid,
@@ -41,15 +45,17 @@ function Prontuario({user, dispatch}) {
             console.log(error)
             console.log(error.response.data)
         });
-        console.log(response.data);
-        if(response.data.length > 0) {
-            dispatch(setParticipantId(response.data[0].participantID));
-        }
+       
         if(response.data) {
-            if(response.data[0])
-                setError(response.data[0].msgRetorno)
-            else
-                setError('')
+            setModulesLoaded(true);
+            if(response.data.length > 0) {
+                dispatch(setParticipantId(response.data[0].participantID));
+                if(response.data[0].msgRetorno) {
+                    setError(response.data[0].msgRetorno)
+                } else {
+                    setError('')
+                }
+            }
 
             for(let record of response.data) {
                 record.dataRefer = new Date(record.dataRefer);
@@ -111,21 +117,25 @@ function Prontuario({user, dispatch}) {
             { (error) &&
                 <span className="error">{ error }</span>
             }
-            { (modules.length > 0) && (!error) &&
-                <div className="prontuario-result">
+            <div className="prontuario-result">
+                { modulesLoaded && !error &&
                     <div className="title-table">
-                        <h4>Módulos cadastrados do prontuário { modules[0].medicalRecord }
+                        <h4>Módulos cadastrados do prontuário { modules.length > 0 ? modules[0].medicalRecord : search }
                         <Edit onClick={ () => {
-                            history.push('/editar-prontuario', { hospitalIndex: location.state.hospitalIndex, prontuario: modules[0].medicalRecord, participantId: modules[0].participantID })
+                            history.push('/editar-prontuario', { hospitalIndex: location.state.hospitalIndex,
+                                                                 prontuario: modules.length > 0 ? modules[0].medicalRecord : search,
+                                                                 participantId: modules[0].participantID })
                         }}/>
                         </h4>
                         <Button variant="outlined" color="primary" className="add-modulo" onClick={ () => {
-                        history.push('/modulos', { hospitalIndex: location.state.hospitalIndex, prontuario: modules[0].medicalRecord })
+                            history.push('/modulos', { hospitalIndex: location.state.hospitalIndex, prontuario: modules.length > 0 ? modules[0].medicalRecord : search })
                         }}>
                             <Add color="primary" />
                             Novo lançamento de módulo
                         </Button>
                     </div>
+                }
+                { modules.length > 0 && modulesLoaded && !error &&
                     <table>
                         <thead>
                             <tr>
@@ -146,8 +156,9 @@ function Prontuario({user, dispatch}) {
                             ))}
                         </tbody>
                     </table>
-                </div>
-            }
+                }
+            </div>
+            
         </main>
     );
 }

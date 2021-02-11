@@ -85,6 +85,7 @@ function Cadastro({user}) {
             error: validateErrors
         });
         console.log(form, validateErrors)
+        history.go(-1)
     }
 
     return (

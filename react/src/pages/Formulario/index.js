@@ -47,11 +47,10 @@ function Formulario({logged, user, participantId}) {
     }
 
     function fillForm(responses) {
+        console.log('Nome do Hospital', location.state.hospitalName);
         let formWithResponse = { }
         for(let response of responses) {
-            console.log(response);
             if(response.answer != null) {
-                console.log(response.dsc_qst, ' TEM RESPOSTA')
                 if(response.rsp_listofvalue)
                     formWithResponse[response.qstId] = response.rsp_listofvalue
                 else
@@ -156,14 +155,17 @@ function Formulario({logged, user, participantId}) {
 
         console.log('response',response);
 
-        history.go(-2);
+        if(location.state.formRecordId)
+            history.go(-1);
+        else
+            history.go(-2);
     }
 
     return (
         <main className="container">
             <div>
                 <header className="index">
-                    {location.state.hospitalName} > 100017029697 > <b>{ titles[location.state.modulo-1] }</b>
+                    { user[location.state.hospitalIndex].hospitalName } > 100017029697 > <b>{ titles[location.state.modulo-1] }</b>
                 </header>
                 <h2>Módulo { location.state.modulo } - { titles[location.state.modulo-1] }</h2>
                 <form className="module" onSubmit={submit}>
