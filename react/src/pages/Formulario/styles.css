@@ -42,9 +42,15 @@ form.module h3 {
 
 form.module div.form-submit {
   display: flex;
+  flex-direction: column;
   padding-top: 64px;
   align-items: center;
   justify-content: center;
+}
+
+form.module div.form-submit p.error {
+  color: crimson;
+  margin-bottom: 32px;
 }
 
 form.module div.form-submit button {

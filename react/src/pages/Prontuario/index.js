@@ -128,14 +128,16 @@ function Prontuario({user, dispatch}) {
                         }}/>
                         </h4>
                         <Button variant="outlined" color="primary" className="add-modulo" onClick={ () => {
-                            history.push('/modulos', { hospitalIndex: location.state.hospitalIndex, prontuario: modules.length > 0 ? modules[0].medicalRecord : search })
+                            history.push('/modulos', { hospitalIndex: location.state.hospitalIndex,
+                                                       prontuario: modules.length > 0 ? modules[0].medicalRecord : search,
+                                                       registeredModules: modules[0].formrecordid ? modules : [] })
                         }}>
                             <Add color="primary" />
                             Novo lançamento de módulo
                         </Button>
                     </div>
                 }
-                { modules.length > 0 && modulesLoaded && !error &&
+                { modules.length > 0 && modulesLoaded && !error && modules[0].formrecordid &&
                     <table>
                         <thead>
                             <tr>
@@ -147,12 +149,16 @@ function Prontuario({user, dispatch}) {
                         <tbody>
                             {modules.map((module, index) => (
                                 <tr key={module.formrecordid} className="data-items" onClick={ () => {
-                                    history.push('/formulario', { modulo: module.crfformsid, formRecordId: module.formrecordid, hospitalIndex: location.state.hospitalIndex })
+                                    history.push('/formulario', { modulo: module.crfformsid,
+                                                                  formRecordId: module.formrecordid,
+                                                                  hospitalIndex: location.state.hospitalIndex,
+                                                                  registeredModules: modules[0].formrecordid ? modules : [] })
                                 }}>
                                     <td>{ module.moduleName }</td>
                                     <td>{ module.dataRefer.getDate() + 1 }/{ module.dataRefer.getMonth() + 1 }/{ module.dataRefer.getFullYear() }</td>
                                     <td>{ Math.ceil(module.questionAnswerTot * 100 / module.questionTot) }%</td>
                                 </tr>
+                                
                             ))}
                         </tbody>
                     </table>

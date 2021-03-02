@@ -5,6 +5,7 @@ import { TextField, Button, FormLabel, RadioGroup, Radio, FormControlLabel, Inpu
 import api from '../../services/api';
 import { connect } from 'react-redux';
 import { useHistory } from "react-router-dom";
+import validFormDate from '../../utils/methods/validFormDate';
 
 
 function Formulario({logged, user, participantId}) {
@@ -16,6 +17,8 @@ function Formulario({logged, user, participantId}) {
     const [form, setForm] = useState({
 
     });
+
+    const [formError, setFormError] = useState('')
 
     const history = useHistory();
 
@@ -46,8 +49,9 @@ function Formulario({logged, user, participantId}) {
         }
     }
 
+    console.log('OUTROS MODULOS', location.state.registeredModules);
+
     function fillForm(responses) {
-        console.log('Nome do Hospital', location.state.hospitalName);
         let formWithResponse = { }
         for(let response of responses) {
             if(response.answer != null) {
@@ -79,6 +83,8 @@ function Formulario({logged, user, participantId}) {
 
         console.log('idQuestão: ' + target.name, 'value: ' + target.value);
 
+        if(target.name == getIdFromDateQuestion() && formError)
+            setFormError('')
 
         setForm({
             ...form,
@@ -121,6 +127,14 @@ function Formulario({logged, user, participantId}) {
         let request;
         let dateQuestionId = getIdFromDateQuestion();
         let response;
+
+        let validationDate = validFormDate(location.state.registeredModules, location.state.modulo, form[dateQuestionId], location.state.formRecordId ? true : false)
+        console.log(validationDate);
+
+        if(!validationDate.isValid) {
+            setFormError(validationDate.message);
+            return;
+        }
 
         // Caso seja uma atualização de formulário
         if(location.state.formRecordId) {
@@ -257,6 +271,7 @@ function Formulario({logged, user, participantId}) {
                     </div>
 
                     <div className="form-submit">
+                        <p className="error"> { formError } </p>
                         <Button variant="contained" type="submit" color="primary">Enviar</Button>
                     </div>
                 </form>

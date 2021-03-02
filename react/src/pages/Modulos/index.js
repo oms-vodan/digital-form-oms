@@ -33,7 +33,7 @@ import { connect } from 'react-redux';
                 {responseQuantityModules.map((item, index) => (
                     <div key={index}
                         className="item" onClick={ () => {
-                    history.push('/formulario', { modulo: item.crfFormsId, hospitalIndex: location.state.hospitalIndex })
+                    history.push('/formulario', { modulo: item.crfFormsId, hospitalIndex: location.state.hospitalIndex, registeredModules: location.state.registeredModules })
                 }}>
                     <h4>Módulo {item.crfFormsId}</h4>
                     <p>{item.description}</p>
