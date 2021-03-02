@@ -210,6 +210,7 @@ function Formulario({logged, user, participantId}) {
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
+                                    disabled={ location.state.formRecordId && ( question.qstId == getIdFromDateQuestion() ) }
                                     onChange={handleChange}
                                     value={form[question.qstId] ? form[question.qstId] : '' }
                                 />
