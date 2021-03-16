@@ -204,7 +204,7 @@ function Formulario({logged, user, participantId}) {
                                 <TextField
                                     id="date"
                                     label={question.dsc_qst}
-                                    type="date"
+                                    type="datetime-local"
                                     name={String(question.qstId)}
                                     // defaultValue={getCurrentDate()}
                                     InputLabelProps={{

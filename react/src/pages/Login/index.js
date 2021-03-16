@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import './styles.css';
 import { TextField, Button } from '@material-ui/core';
 import api from '../../services/api';
+import { AES, mode } from 'crypto-js';
 //import logo from '../../../public/assets/logo-vodan.png';
 
 import { connect } from 'react-redux';
@@ -40,11 +41,11 @@ function Login({ logged, dispatch }) {
 
   async function handleLogin(e) {
     e.preventDefault();
-    console.log(form);
+    const encryptedPassword = AES.encrypt(form.senha, 10, { mode: mode.ECB }).toString();
     try {
       const response = await api.post('/login',  {
         login: form.email,
-        password: form.senha
+        password: encryptedPassword
       });
 
       console.log(response.data[0]);

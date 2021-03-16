@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import './styles.css';
 import { TextField, Button, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { AES, mode } from 'crypto-js';
 
 import api from '../../services/api';
 
@@ -54,8 +55,13 @@ function Cadastro({user}) {
 
     function handleChange(e) {
         const target = e.target;
-        const value = target.value;
+        let value = target.value;
         const name = target.name;
+
+        if(name == 'senha' || name == 'confirmasenha') {
+            const encryptedPassword = AES.encrypt(value, 10, { mode: mode.ECB }).toString();
+            value = encryptedPassword
+        }
 
         setForm({
             ...form,
@@ -68,6 +74,7 @@ function Cadastro({user}) {
     async function handleRegister(e) {
         e.preventDefault();
 
+        console.log(form)
         try {
             const response = await api.post('/register', form);
             console.log(response);
