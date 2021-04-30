@@ -21,14 +21,10 @@ function userLogout() {
   }
 
 function Navbar({ onSubmit, state, dispatch }) {
-
-    const history = useHistory();
     
     console.log(state);
 
     function logout() {
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('username');
         dispatch(userLogout());
         window.location.href = '/';
     }
@@ -38,7 +34,7 @@ function Navbar({ onSubmit, state, dispatch }) {
             <div className="navContent">
                 <div className="leftItems">
                     <img src="assets/logo-icon.png" />
-                    <h1>Formulário OMS</h1>
+                    <h1>VODAN BR</h1>
                 </div>
                 <div className="rightItems">
                     <p>Acesso como <b>{localStorage.getItem('username')}</b></p>

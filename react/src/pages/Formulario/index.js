@@ -28,13 +28,10 @@ function Formulario({logged, user, participantId}) {
     useEffect(() => {
         async function loadForm() {
             const response = await api.get('/form/' + location.state.modulo);
-            console.log(response.data);
             setQuestions(response.data);
-            console.log(location.state.hospitalIndex);
 
             // Caso seja uma atualização de formulário
             if(location.state.formRecordId) {
-                console.log(location.state.formRecordId);
                 getRecordedResponses(location.state.formRecordId)
             }
         }
@@ -49,8 +46,6 @@ function Formulario({logged, user, participantId}) {
         }
     }
 
-    console.log('OUTROS MODULOS', location.state.registeredModules);
-
     function fillForm(responses) {
         let formWithResponse = { }
         for(let response of responses) {
@@ -64,7 +59,6 @@ function Formulario({logged, user, participantId}) {
 
         setForm(formWithResponse);
         setLoadedResponses(true)
-        console.log(form);
     }
 
     function getCurrentDate() {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useLocation } from "react-router-dom";
 import './styles.css';
 import { useHistory } from "react-router-dom";
-import { TextField, Button} from '@material-ui/core';
+import { TextField, Button, CircularProgress } from '@material-ui/core';
 import { Add, Edit } from '@material-ui/icons';
 
 import { connect } from 'react-redux';
@@ -18,10 +18,11 @@ function setParticipantId(participantId) {
 
 function Prontuario({user, dispatch}) {
 
-    const [search, setSearch] = useState('')
-    const [error, setError] = useState('')
-    const [modules, setModules] = useState([])
-    const [modulesLoaded, setModulesLoaded] = useState(false)
+    const [search, setSearch] = useState('');
+    const [error, setError] = useState('');
+    const [modules, setModules] = useState([]);
+    const [modulesLoaded, setModulesLoaded] = useState(false);
+    const [loadingSearch, setLoadingSearch] = useState(false);
 
     const history = useHistory();
 
@@ -29,24 +30,20 @@ function Prontuario({user, dispatch}) {
 
     async function handleSearch(e) {
         e.preventDefault();
-        console.log(
-            {
-                medicalRecord: search,
-                hospitalUnitId: user[location.state.hospitalIndex].hospitalunitid,
-            }
-        )
-
-        setError('')
+        setError('');
+        setLoadingSearch(true);
         setModulesLoaded(false);
         const response = await api.post('/searchMedicalRecord', {
             medicalRecord: search,
             hospitalUnitId: user[location.state.hospitalIndex].hospitalunitid,
         }).catch( function (error) {
+            setLoadingSearch(false);
             console.log(error)
             console.log(error.response.data)
         });
        
         if(response.data) {
+            setLoadingSearch(false);
             setModulesLoaded(true);
             if(response.data.length > 0) {
                 dispatch(setParticipantId(response.data[0].participantID));
@@ -104,7 +101,12 @@ function Prontuario({user, dispatch}) {
                 <form noValidate autoComplete="off" onSubmit={handleSearch}>
                     <TextField id="standard-basic" label="Nº Prontuário" onChange={handleChange}/>
                     <Button variant="contained" color="primary" type="submit">
-                        Buscar
+                        { !loadingSearch &&
+                            'Buscar'
+                        }
+                        { loadingSearch &&
+                            <CircularProgress color="white"/>
+                        }
                     </Button>
                 </form>
                 <Button variant="outlined" color="primary" className="add-prontuario" onClick={ () => {
