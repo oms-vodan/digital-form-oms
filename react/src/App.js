@@ -11,6 +11,9 @@ import Navbar from './components/Navbar'
 function App({logged}) {
 
   function IsLogged(props) {
+    console.log(window.location.pathname)
+    if(window.location.pathname !== '/' && window.location.pathname !== '/login')
+      window.location.href = '/';
     console.log(props);
     if(props.isLoggedIn)
       return <Navbar />;

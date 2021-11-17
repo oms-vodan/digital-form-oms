@@ -4,7 +4,7 @@ nav {
     display: flex;
     height: 60px;
     width: 100%;
-    background-color: #538EB3;
+    background-color: #0052D2;
 }
 
 nav .navContent {
@@ -14,6 +14,19 @@ nav .navContent {
     justify-content: space-between;
     width: 100%;
     margin: 0 5vw;
+}
+
+.navContent div.leftItems {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.navContent div.leftItems img {
+    height: 38px;
+    filter: brightness(0) invert(1);
 }
 
 nav .navContent .rightItems {

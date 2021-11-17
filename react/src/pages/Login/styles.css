@@ -5,6 +5,13 @@ div.login {
     justify-content: center;
 }
 
+div.login form img {
+    text-align: center;
+    width: 60%;
+    margin: auto;
+    margin-bottom: 40px;
+}
+
 form {
     background-color: white;
     border-radius: 10px;

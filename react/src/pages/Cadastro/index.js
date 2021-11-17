@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import './styles.css';
-import { TextField, Button, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { TextField, Button, InputLabel, Select, MenuItem, CircularProgress } from '@material-ui/core';
+import { AES, mode } from 'crypto-js';
 
 import api from '../../services/api';
 
@@ -38,6 +39,8 @@ function Cadastro({user}) {
         error: ''
     })
 
+    const [loading, setLoading] = useState(false);
+
     const history = useHistory();
 
     function validators() {
@@ -54,8 +57,13 @@ function Cadastro({user}) {
 
     function handleChange(e) {
         const target = e.target;
-        const value = target.value;
+        let value = target.value;
         const name = target.name;
+
+        if(name == 'senha' || name == 'confirmasenha') {
+            const encryptedPassword = AES.encrypt(value, 10, { mode: mode.ECB }).toString();
+            value = encryptedPassword
+        }
 
         setForm({
             ...form,
@@ -68,11 +76,13 @@ function Cadastro({user}) {
     async function handleRegister(e) {
         e.preventDefault();
 
+        setLoading(true);
         try {
             const response = await api.post('/register', form);
             console.log(response);
             history.replace('/hospital');
         } catch(e) {
+            setLoading(false);
             console.log(e)
             setForm({
                 ...form,
@@ -85,6 +95,8 @@ function Cadastro({user}) {
             error: validateErrors
         });
         console.log(form, validateErrors)
+        setLoading(false);
+        history.go(-1)
     }
 
     return (
@@ -119,7 +131,14 @@ function Cadastro({user}) {
                     <Button style={styles.Button} variant="contained" type="submit" color="primary" disabled={
                         form.nome === '' || form.sobrenome === '' || form.email === '' || form.telefone === '' || form.senha === '' || form.confirmasenha === '' ||
                         form.crm === '' || form.funcao === ''
-                    }>Registrar</Button>
+                    }>
+                        { !loading &&
+                            'Registrar'
+                        }
+                        { loading &&
+                            <CircularProgress color="white"/>
+                        }                    
+                    </Button>
                 </div>
                 
             </form>

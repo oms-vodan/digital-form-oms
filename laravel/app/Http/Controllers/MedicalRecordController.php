@@ -23,8 +23,8 @@ class MedicalRecordController extends Controller
                 return response()->json($query_msg, 404);
             }
 
-            if($query_msg->Message) {
-                if($query_msg->Message == 'Ocorreu um erro durante a execução do procedimento. Contacte o administrador!') {
+            if($query_msg->msgRetorno) {
+                if($query_msg->msgRetorno == 'Ocorreu um erro durante a execução do procedimento. Contacte o administrador!') {
                     return response()->json($query_msg, 404);
                 }
             }
